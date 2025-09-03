@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { LayoutOption, ColorSchemeOption, TypographyOption } from '../types';
 import { LAYOUT_OPTIONS, COLOR_SCHEME_OPTIONS, TYPOGRAPHY_OPTIONS } from '../constants';
 import SettingsIcon from './icons/SettingsIcon';
@@ -15,6 +15,17 @@ interface CustomizerProps {
 const Customizer: React.FC<CustomizerProps> = ({ layout, setLayout, colorScheme, onColorSchemeChange, typography, setTypography }) => {
   const [isOpen, setIsOpen] = useState(false);
 
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isOpen]);
+
   return (
     <>
       <button
@@ -24,6 +35,16 @@ const Customizer: React.FC<CustomizerProps> = ({ layout, setLayout, colorScheme,
       >
         <SettingsIcon className="w-6 h-6" />
       </button>
+
+      {/* Backdrop */}
+      {isOpen && (
+        <div 
+          onClick={() => setIsOpen(false)}
+          className="fixed inset-0 bg-black bg-opacity-50 z-30 transition-opacity duration-300 ease-in-out"
+          aria-hidden="true"
+        ></div>
+      )}
+
       <div
         className={`fixed top-0 right-0 h-full bg-gray-100 dark:bg-gray-800 shadow-2xl z-40 transition-transform duration-300 ease-in-out ${
           isOpen ? 'translate-x-0' : 'translate-x-full'
@@ -31,7 +52,7 @@ const Customizer: React.FC<CustomizerProps> = ({ layout, setLayout, colorScheme,
       >
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-xl font-bold text-gray-800 dark:text-gray-200">Customize Website</h2>
-          <button onClick={() => setIsOpen(false)} className="text-gray-500 hover:text-gray-800 dark:hover:text-gray-200">&times;</button>
+          <button onClick={() => setIsOpen(false)} className="text-gray-500 hover:text-gray-800 dark:hover:text-gray-200 text-3xl leading-none">&times;</button>
         </div>
 
         <div className="mb-8">

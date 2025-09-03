@@ -66,7 +66,7 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className={`${getFontClasses()} bg-[var(--color-background)] text-[var(--color-text-primary)] transition-colors duration-500`}>
+    <div className={`${getFontClasses()} bg-[var(--color-background)] text-[var(--color-text-primary)] transition-colors duration-500 overflow-x-hidden`}>
       <Customizer 
         layout={layout} 
         setLayout={setLayout} 
