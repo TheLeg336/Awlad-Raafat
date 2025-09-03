@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { LayoutOption, LanguageOption } from '../types';
 import type { TFunction } from '../App';
@@ -23,11 +24,36 @@ const Header: React.FC<HeaderProps> = ({ layout, language, setLanguage, t }) => 
 
   const navLinks = [
     { key: 'nav_home', href: '#' },
-    { key: 'nav_shop', href: '#' },
-    { key: 'nav_about', href: '#' },
+    { key: 'nav_shop', href: '#shop' },
+    { key: 'nav_about', href: '#about' },
     { key: 'nav_locations', href: '#' },
-    { key: 'nav_contact', href: '#' },
+    { key: 'nav_contact', href: '#contact' },
   ];
+  
+  const handleSmoothScroll = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+    e.preventDefault();
+    const href = e.currentTarget.getAttribute('href');
+    if (href && href.startsWith('#')) {
+      const targetId = href.substring(1);
+      const targetElement = document.getElementById(targetId);
+      if (targetElement) {
+        const header = document.querySelector('header');
+        // Check if header is sticky
+        const isSticky = header && window.getComputedStyle(header).position === 'sticky';
+        const headerHeight = isSticky && header ? header.offsetHeight : 0;
+        const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - headerHeight;
+        
+        window.scrollTo({
+          top: targetPosition,
+          behavior: 'smooth'
+        });
+      }
+    }
+    if (isMenuOpen) {
+      setIsMenuOpen(false);
+    }
+  };
+
 
   const headerClasses = {
     [LayoutOption.Minimalist]: 'sticky top-0 z-30 bg-[var(--color-background)] bg-opacity-80 backdrop-blur-md shadow-sm',
@@ -60,8 +86,8 @@ const Header: React.FC<HeaderProps> = ({ layout, language, setLanguage, t }) => 
     <>
       <ul className={`flex ${isMobile ? 'flex-col text-xl space-y-6' : `items-center ${navClasses[layout]} space-x-8`}`}>
         {navLinks.map(link => (
-          <li key={link.key} onClick={() => isMobile && setIsMenuOpen(false)}>
-            <a href={link.href} className="text-[var(--color-text-secondary)] hover:text-[var(--color-primary)] transition-colors duration-300">{t(link.key)}</a>
+          <li key={link.key}>
+            <a href={link.href} onClick={(e) => link.href.startsWith('#') ? handleSmoothScroll(e) : (isMobile && setIsMenuOpen(false))} className="text-[var(--color-text-secondary)] hover:text-[var(--color-primary)] transition-colors duration-300">{t(link.key)}</a>
           </li>
         ))}
       </ul>
@@ -105,7 +131,7 @@ const Header: React.FC<HeaderProps> = ({ layout, language, setLanguage, t }) => 
         </div>
 
         {/* Mobile Menu Overlay */}
-        <div className={`fixed inset-0 z-40 bg-[var(--color-background)] bg-opacity-95 backdrop-blur-sm transition-transform duration-300 ease-in-out md:hidden ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}>
+        <div className={`fixed inset-0 z-40 bg-[var(--color-background)] transition-transform duration-300 ease-in-out md:hidden ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}>
           <nav className="flex flex-col items-center justify-center h-full">
             <NavContent isMobile={true}/>
           </nav>

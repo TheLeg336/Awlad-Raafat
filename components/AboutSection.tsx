@@ -1,5 +1,5 @@
+
 import React from 'react';
-// FIX: Import Variants from framer-motion to correctly type animation variants.
 import { motion, Variants } from 'framer-motion';
 import { LayoutOption } from '../types';
 import { getTextContent } from '../constants';
@@ -22,13 +22,11 @@ const AboutSection: React.FC<AboutSectionProps> = ({ layout, t }) => {
     [LayoutOption.ModernSleek]: 'bg-black text-white',
   };
 
-  // FIX: Explicitly type animation variants with the 'Variants' type from framer-motion.
   const sectionVariants: Variants = {
     hidden: { opacity: 0, y: 50 },
     visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: 'easeOut' } }
   };
   
-  // FIX: Explicitly type animation variants with the 'Variants' type from framer-motion.
   const staggeredContainer: Variants = {
       hidden: {},
       visible: { transition: { staggerChildren: 0.2 } }

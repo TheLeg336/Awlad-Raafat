@@ -1,5 +1,5 @@
+
 import React from 'react';
-// FIX: Import Variants from framer-motion to correctly type animation variants.
 import { motion, Variants } from 'framer-motion';
 import { LayoutOption } from '../types';
 import type { TFunction } from '../App';
@@ -25,13 +25,11 @@ const Footer: React.FC<FooterProps> = ({ layout, t }) => {
         [LayoutOption.ModernSleek]: 'bg-black text-gray-400 border-t border-gray-800',
     };
 
-    // FIX: Explicitly type animation variants with the 'Variants' type from framer-motion.
     const containerVariants: Variants = {
         hidden: {},
         visible: { transition: { staggerChildren: 0.2 } }
     };
 
-    // FIX: Explicitly type animation variants with the 'Variants' type from framer-motion.
     const itemVariants: Variants = {
         hidden: { opacity: 0, y: 20 },
         visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: 'easeOut' } }
@@ -94,8 +92,8 @@ const Footer: React.FC<FooterProps> = ({ layout, t }) => {
                     <motion.div variants={itemVariants}>
                         <h4 className="text-base sm:text-lg font-semibold mb-4">{t('footer_quick_links')}</h4>
                         <ul className="space-y-2 text-sm">
-                            <li><a href="#" className="hover:text-[var(--color-primary)]">{t('nav_about')}</a></li>
-                            <li><a href="#" className="hover:text-[var(--color-primary)]">{t('nav_contact')}</a></li>
+                            <li><a href="#about" className="hover:text-[var(--color-primary)]">{t('nav_about')}</a></li>
+                            <li><a href="#contact" className="hover:text-[var(--color-primary)]">{t('nav_contact')}</a></li>
                         </ul>
                     </motion.div>
                     

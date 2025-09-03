@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { LayoutOption, ColorSchemeOption, LanguageOption, TypographyOption } from './types';
@@ -29,6 +30,14 @@ const App: React.FC = () => {
     root.style.setProperty('--color-text-primary', scheme.textPrimary);
     root.style.setProperty('--color-text-secondary', scheme.textSecondary);
     root.style.setProperty('--color-success', scheme.success);
+
+    // Apply smooth scrolling to the html element
+    root.style.scrollBehavior = 'smooth';
+    
+    return () => {
+      // Cleanup scroll behavior on component unmount
+      root.style.scrollBehavior = 'auto';
+    };
   }, [colorScheme, themeMode]);
 
   useEffect(() => {
@@ -86,10 +95,16 @@ const App: React.FC = () => {
           <Header layout={layout} language={language} setLanguage={setLanguage} t={t} />
           <main>
             <Hero layout={layout} t={t} />
-            <ProductSection layout={layout} t={t} />
-            <AboutSection layout={layout} t={t} />
+            <section id="shop">
+              <ProductSection layout={layout} t={t} />
+            </section>
+            <section id="about">
+              <AboutSection layout={layout} t={t} />
+            </section>
           </main>
-          <Footer layout={layout} t={t} />
+          <div id="contact">
+            <Footer layout={layout} t={t} />
+          </div>
         </motion.div>
       </AnimatePresence>
       <ThemeToggle themeMode={themeMode} setThemeMode={setThemeMode} />

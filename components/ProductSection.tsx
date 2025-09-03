@@ -1,5 +1,5 @@
+
 import React from 'react';
-// FIX: Import Variants from framer-motion to correctly type animation variants.
 import { motion, Variants } from 'framer-motion';
 import { LayoutOption, Product } from '../types';
 import { PRODUCTS, getTextContent } from '../constants';
@@ -63,19 +63,16 @@ const ProductCardSleek: React.FC<{ product: Product; t: TFunction }> = ({ produc
 const ProductSection: React.FC<ProductSectionProps> = ({ layout, t }) => {
     const content = getTextContent(t);
 
-    // FIX: Explicitly type animation variants with the 'Variants' type from framer-motion.
     const sectionHeaderVariants: Variants = {
         hidden: { opacity: 0, y: 30 },
         visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: 'easeOut' } }
     };
 
-    // FIX: Explicitly type animation variants with the 'Variants' type from framer-motion.
     const gridVariants: Variants = {
         hidden: {},
         visible: { transition: { staggerChildren: 0.2 } }
     };
     
-    // FIX: Explicitly type animation variants with the 'Variants' type from framer-motion.
     const itemVariants: Variants = {
         hidden: { opacity: 0, y: 30 },
         visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: 'easeOut' } }
@@ -115,10 +112,10 @@ const ProductSection: React.FC<ProductSectionProps> = ({ layout, t }) => {
             case LayoutOption.Artistic:
                 return (
                     <motion.div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 auto-rows-[minmax(0,_1fr)] h-auto md:h-[70vh]" variants={gridVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }}>
-                        <motion.div variants={itemVariants} className="col-span-2 row-span-2"><ProductCardArtistic product={PRODUCTS[0]} t={t} className="w-full h-full" /></motion.div>
-                        <motion.div variants={itemVariants} className="col-span-1 row-span-1"><ProductCardArtistic product={PRODUCTS[1]} t={t} className="w-full h-full" /></motion.div>
-                        <motion.div variants={itemVariants} className="col-span-1 row-span-1"><ProductCardArtistic product={PRODUCTS[2]} t={t} className="w-full h-full" /></motion.div>
-                        <motion.div variants={itemVariants} className="col-span-2 row-span-1"><ProductCardArtistic product={PRODUCTS[3]} t={t} className="w-full h-full" /></motion.div>
+                        <motion.div variants={itemVariants} className="md:col-span-2 md:row-span-2"><ProductCardArtistic product={PRODUCTS[0]} t={t} className="w-full h-full" /></motion.div>
+                        <motion.div variants={itemVariants} className="md:col-span-1 md:row-span-1"><ProductCardArtistic product={PRODUCTS[1]} t={t} className="w-full h-full" /></motion.div>
+                        <motion.div variants={itemVariants} className="md:col-span-1 md:row-span-1"><ProductCardArtistic product={PRODUCTS[2]} t={t} className="w-full h-full" /></motion.div>
+                        <motion.div variants={itemVariants} className="md:col-span-2 md:row-span-1"><ProductCardArtistic product={PRODUCTS[3]} t={t} className="w-full h-full" /></motion.div>
                     </motion.div>
                 );
             case LayoutOption.MonochromaticGallery:

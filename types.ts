@@ -1,3 +1,4 @@
+
 export enum LayoutOption {
   Minimalist = 'minimalist',
   Classic = 'classic',

@@ -1,5 +1,5 @@
+
 import React from 'react';
-// FIX: Import Variants from framer-motion to correctly type animation variants.
 import { motion, Variants } from 'framer-motion';
 import { LayoutOption } from '../types';
 import { getTextContent } from '../constants';
@@ -73,7 +73,6 @@ const Hero: React.FC<HeroProps> = ({ layout, t }) => {
 
   const currentConfig = heroConfig[layout];
 
-  // FIX: Explicitly type animation variants with the 'Variants' type from framer-motion.
   const containerVariants: Variants = {
     hidden: { opacity: 0 },
     visible: {
@@ -82,7 +81,6 @@ const Hero: React.FC<HeroProps> = ({ layout, t }) => {
     },
   };
 
-  // FIX: Explicitly type animation variants with the 'Variants' type from framer-motion.
   const itemVariants: Variants = {
     hidden: { opacity: 0, y: 20 },
     visible: {
