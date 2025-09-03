@@ -130,7 +130,7 @@ const Header: React.FC<HeaderProps> = ({ layout, language, setLanguage, t }) => 
         </div>
 
         {/* Mobile Menu Overlay */}
-        <div className={`fixed inset-0 z-40 bg-[var(--color-background)] border-l border-[var(--color-text-secondary)]/20 transition-transform duration-300 ease-in-out md:hidden ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}>
+        <div className={`fixed inset-0 z-40 bg-[var(--color-background)] border-l-2 border-[var(--color-secondary)] transition-transform duration-300 ease-in-out md:hidden ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}>
           <nav className="flex flex-col items-center justify-center h-full">
             <NavContent isMobile={true}/>
           </nav>
