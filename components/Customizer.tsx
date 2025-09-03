@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { LayoutOption, ColorSchemeOption, TypographyOption } from '../types';
 import { LAYOUT_OPTIONS, COLOR_SCHEME_OPTIONS, TYPOGRAPHY_OPTIONS } from '../constants';
@@ -47,17 +46,17 @@ const Customizer: React.FC<CustomizerProps> = ({ layout, setLayout, colorScheme,
       )}
 
       <div
-        className={`fixed top-0 right-0 h-full bg-gray-100 dark:bg-gray-800 shadow-2xl z-40 transition-transform duration-300 ease-in-out ${
+        className={`fixed top-0 right-0 h-full bg-[var(--color-background)] shadow-2xl z-40 transition-transform duration-300 ease-in-out border-l border-[var(--color-text-secondary)]/20 ${
           isOpen ? 'translate-x-0' : 'translate-x-full'
         } w-full sm:w-80 p-6 overflow-y-auto`}
       >
         <div className="flex justify-between items-center mb-6">
-          <h2 className="text-xl font-bold text-gray-800 dark:text-gray-200">Customize Website</h2>
-          <button onClick={() => setIsOpen(false)} className="text-gray-500 hover:text-gray-800 dark:hover:text-gray-200 text-3xl leading-none">&times;</button>
+          <h2 className="text-xl font-bold text-[var(--color-text-primary)]">Customize Website</h2>
+          <button onClick={() => setIsOpen(false)} className="text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] text-3xl leading-none">&times;</button>
         </div>
 
         <div className="mb-8">
-          <h3 className="text-lg font-semibold mb-3 text-gray-700 dark:text-gray-300">Layout Options</h3>
+          <h3 className="text-lg font-semibold mb-3 text-[var(--color-text-primary)]">Layout Options</h3>
           <div className="space-y-2">
             {LAYOUT_OPTIONS.map((option) => (
               <button
@@ -65,8 +64,8 @@ const Customizer: React.FC<CustomizerProps> = ({ layout, setLayout, colorScheme,
                 onClick={() => setLayout(option.id)}
                 className={`w-full text-left p-3 rounded-md transition-colors ${
                   layout === option.id
-                    ? 'bg-blue-500 text-white shadow'
-                    : 'bg-white dark:bg-gray-700 text-gray-600 dark:text-gray-300 hover:bg-blue-100 dark:hover:bg-gray-600'
+                    ? 'bg-[var(--color-primary)] text-[var(--color-background)] shadow'
+                    : 'bg-[var(--color-secondary)]/10 text-[var(--color-text-secondary)] hover:bg-[var(--color-primary)]/20'
                 }`}
               >
                 {option.label}
@@ -76,7 +75,7 @@ const Customizer: React.FC<CustomizerProps> = ({ layout, setLayout, colorScheme,
         </div>
 
         <div className="mb-8">
-          <h3 className="text-lg font-semibold mb-3 text-gray-700 dark:text-gray-300">Typography</h3>
+          <h3 className="text-lg font-semibold mb-3 text-[var(--color-text-primary)]">Typography</h3>
           <div className="space-y-2">
             {TYPOGRAPHY_OPTIONS.map((option) => (
               <button
@@ -84,8 +83,8 @@ const Customizer: React.FC<CustomizerProps> = ({ layout, setLayout, colorScheme,
                 onClick={() => setTypography(option.id)}
                 className={`w-full text-left p-3 rounded-md transition-colors ${
                   typography === option.id
-                    ? 'bg-blue-500 text-white shadow'
-                    : 'bg-white dark:bg-gray-700 text-gray-600 dark:text-gray-300 hover:bg-blue-100 dark:hover:bg-gray-600'
+                    ? 'bg-[var(--color-primary)] text-[var(--color-background)] shadow'
+                    : 'bg-[var(--color-secondary)]/10 text-[var(--color-text-secondary)] hover:bg-[var(--color-primary)]/20'
                 }`}
               >
                 {option.label}
@@ -95,7 +94,7 @@ const Customizer: React.FC<CustomizerProps> = ({ layout, setLayout, colorScheme,
         </div>
 
         <div>
-          <h3 className="text-lg font-semibold mb-3 text-gray-700 dark:text-gray-300">Color Schemes</h3>
+          <h3 className="text-lg font-semibold mb-3 text-[var(--color-text-primary)]">Color Schemes</h3>
           <div className="space-y-2">
             {COLOR_SCHEME_OPTIONS.map((option) => (
               <button
@@ -103,8 +102,8 @@ const Customizer: React.FC<CustomizerProps> = ({ layout, setLayout, colorScheme,
                 onClick={() => onColorSchemeChange(option.id)}
                 className={`w-full text-left p-3 rounded-md transition-colors ${
                   colorScheme === option.id
-                    ? 'bg-blue-500 text-white shadow'
-                    : 'bg-white dark:bg-gray-700 text-gray-600 dark:text-gray-300 hover:bg-blue-100 dark:hover:bg-gray-600'
+                    ? 'bg-[var(--color-primary)] text-[var(--color-background)] shadow'
+                    : 'bg-[var(--color-secondary)]/10 text-[var(--color-text-secondary)] hover:bg-[var(--color-primary)]/20'
                 }`}
               >
                 {option.label}

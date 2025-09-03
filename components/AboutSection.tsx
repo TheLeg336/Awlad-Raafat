@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { motion, Variants } from 'framer-motion';
 import { LayoutOption } from '../types';
@@ -16,10 +15,10 @@ const AboutSection: React.FC<AboutSectionProps> = ({ layout, t }) => {
   const containerClasses = {
     [LayoutOption.Minimalist]: 'bg-[var(--color-background)]',
     [LayoutOption.Classic]: 'bg-white',
-    [LayoutOption.Artistic]: 'bg-[var(--color-secondary)] text-white',
+    [LayoutOption.Artistic]: 'bg-[var(--color-secondary)] text-[var(--color-background)]',
     [LayoutOption.MonochromaticGallery]: 'bg-white',
     [LayoutOption.ArchitecturalBold]: 'bg-[var(--color-background)]',
-    [LayoutOption.ModernSleek]: 'bg-black text-white',
+    [LayoutOption.ModernSleek]: 'bg-[var(--color-text-primary)] text-[var(--color-background)]',
   };
 
   const sectionVariants: Variants = {
@@ -54,17 +53,17 @@ const AboutSection: React.FC<AboutSectionProps> = ({ layout, t }) => {
         return (
           <motion.div className="text-center" initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} variants={staggeredContainer}>
             <motion.h2 variants={sectionVariants} className="text-4xl md:text-5xl font-bold mb-6">{content.about.title}</motion.h2>
-            <motion.p variants={sectionVariants} className="max-w-3xl mx-auto text-lg leading-relaxed text-gray-300">{content.about.p1}</motion.p>
-            <motion.div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-8 text-white" variants={staggeredContainer}>
-              <motion.div variants={sectionVariants} className="border border-gray-500 p-6">
+            <motion.p variants={sectionVariants} className="max-w-3xl mx-auto text-lg leading-relaxed opacity-80">{content.about.p1}</motion.p>
+            <motion.div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-8" variants={staggeredContainer}>
+              <motion.div variants={sectionVariants} className="border border-[var(--color-background)]/20 p-6">
                 <h3 className="text-3xl font-bold text-[var(--color-primary)]">50+</h3>
                 <p>Years of Heritage</p>
               </motion.div>
-              <motion.div variants={sectionVariants} className="border border-gray-500 p-6">
+              <motion.div variants={sectionVariants} className="border border-[var(--color-background)]/20 p-6">
                 <h3 className="text-3xl font-bold text-[var(--color-primary)]">100%</h3>
                 <p>Egyptian Cotton & Wood</p>
               </motion.div>
-              <motion.div variants={sectionVariants} className="border border-gray-500 p-6">
+              <motion.div variants={sectionVariants} className="border border-[var(--color-background)]/20 p-6">
                 <h3 className="text-3xl font-bold text-[var(--color-primary)]">2</h3>
                 <p>Continents Served</p>
               </motion.div>
@@ -107,7 +106,7 @@ const AboutSection: React.FC<AboutSectionProps> = ({ layout, t }) => {
           return (
             <motion.div className="text-center max-w-4xl mx-auto" initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} variants={sectionVariants}>
               <h2 className="text-4xl md:text-6xl font-bold mb-6">{content.about.title}</h2>
-              <div className="space-y-6 text-lg md:text-xl leading-relaxed text-gray-300">
+              <div className="space-y-6 text-lg md:text-xl leading-relaxed opacity-80">
                 <p>{content.about.p1}</p>
                 <p>{content.about.p2}</p>
               </div>

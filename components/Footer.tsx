@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { motion, Variants } from 'framer-motion';
 import { LayoutOption } from '../types';
@@ -17,12 +16,12 @@ const SocialIcon: React.FC<{ children: React.ReactNode }> = ({ children }) => (
 
 const Footer: React.FC<FooterProps> = ({ layout, t }) => {
     const footerClasses = {
-        [LayoutOption.Minimalist]: 'bg-gray-100 text-[var(--color-text-secondary)]',
-        [LayoutOption.Classic]: 'bg-[var(--color-text-primary)] text-gray-300',
-        [LayoutOption.Artistic]: 'bg-[#111] text-gray-400',
+        [LayoutOption.Minimalist]: 'bg-[var(--color-secondary)]/10 text-[var(--color-text-secondary)]',
+        [LayoutOption.Classic]: 'bg-[var(--color-text-primary)] text-[var(--color-text-secondary)]',
+        [LayoutOption.Artistic]: 'bg-[var(--color-text-primary)] text-[var(--color-text-secondary)]',
         [LayoutOption.MonochromaticGallery]: 'bg-[var(--color-background)] text-[var(--color-text-secondary)] border-t border-gray-200',
-        [LayoutOption.ArchitecturalBold]: 'bg-[var(--color-text-primary)] text-gray-400',
-        [LayoutOption.ModernSleek]: 'bg-black text-gray-400 border-t border-gray-800',
+        [LayoutOption.ArchitecturalBold]: 'bg-[var(--color-text-primary)] text-[var(--color-text-secondary)]',
+        [LayoutOption.ModernSleek]: 'bg-[var(--color-text-primary)] text-[var(--color-text-secondary)] border-t border-[var(--color-secondary)]/30',
     };
 
     const containerVariants: Variants = {
@@ -74,7 +73,7 @@ const Footer: React.FC<FooterProps> = ({ layout, t }) => {
                 <motion.div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12" variants={containerVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }}>
                     {/* About/Logo */}
                     <motion.div className="lg:col-span-1" variants={itemVariants}>
-                        <h3 className={`text-2xl font-bold mb-4 ${layout === LayoutOption.Classic || layout === LayoutOption.ArchitecturalBold ? 'text-white' : 'text-[var(--color-text-primary)]'}`}>{t('logo')}</h3>
+                        <h3 className={`text-2xl font-bold mb-4 ${layout === LayoutOption.Classic || layout === LayoutOption.ArchitecturalBold ? 'text-[var(--color-background)]' : 'text-[var(--color-text-primary)]'}`}>{t('logo')}</h3>
                         <p className="text-sm leading-relaxed">{t('about_p1').substring(0, 150)}...</p>
                     </motion.div>
 
@@ -113,7 +112,7 @@ const Footer: React.FC<FooterProps> = ({ layout, t }) => {
                         </div>
                     </motion.div>
                 </motion.div>
-                <div className="border-t border-gray-500 border-opacity-30 pt-6 text-center text-sm">
+                <div className="border-t border-[var(--color-text-secondary)]/30 pt-6 text-center text-sm">
                     <p>{t('footer_copyright')}</p>
                 </div>
             </div>

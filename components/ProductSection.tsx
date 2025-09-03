@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { motion, Variants } from 'framer-motion';
 import { LayoutOption, Product } from '../types';
@@ -52,7 +51,7 @@ const ProductCardArchitectural: React.FC<{ product: Product; t: TFunction }> = (
 
 const ProductCardSleek: React.FC<{ product: Product; t: TFunction }> = ({ product, t }) => (
     <div className="text-center">
-        <div className="bg-gray-100 dark:bg-zinc-800 rounded-lg overflow-hidden mb-4 transition-shadow hover:shadow-xl">
+        <div className="bg-[var(--color-secondary)] rounded-lg overflow-hidden mb-4 transition-shadow hover:shadow-xl">
             <img src={product.imageUrl} alt={t(product.nameKey)} className="w-full h-80 object-cover" />
         </div>
         <h3 className="text-xl font-semibold text-[var(--color-text-primary)]">{t(product.nameKey)}</h3>
@@ -123,17 +122,17 @@ const ProductSection: React.FC<ProductSectionProps> = ({ layout, t }) => {
                     <motion.div className="grid grid-cols-1 md:grid-cols-5 gap-8 items-center" variants={gridVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }}>
                         <motion.div variants={itemVariants} className="md:col-span-3 relative group overflow-hidden">
                             <img src={PRODUCTS[0].imageUrl} alt={t(PRODUCTS[0].nameKey)} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
-                            <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                            <div className="absolute inset-0 bg-gradient-to-t from-[var(--color-text-primary)]/70 to-transparent"></div>
                             <div className="absolute bottom-0 left-0 p-8 w-full">
-                                <h3 className="text-3xl text-white font-semibold font-heading">{t(PRODUCTS[0].nameKey)}</h3>
+                                <h3 className="text-3xl text-[var(--color-background)] font-semibold font-heading">{t(PRODUCTS[0].nameKey)}</h3>
                             </div>
                         </motion.div>
                         <div className="md:col-span-2 grid grid-cols-1 gap-8">
                              {PRODUCTS.slice(1, 3).map(p => (
                                  <motion.div key={p.id} variants={itemVariants} className="group relative overflow-hidden">
                                     <img src={p.imageUrl} alt={t(p.nameKey)} className="w-full h-64 object-cover transition-transform duration-300 group-hover:scale-105"/>
-                                    <div className="absolute inset-0 bg-black/30 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                                        <h4 className="text-white text-xl">{t(p.nameKey)}</h4>
+                                    <div className="absolute inset-0 bg-[var(--color-text-primary)]/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                                        <h4 className="text-[var(--color-background)] text-xl">{t(p.nameKey)}</h4>
                                     </div>
                                  </motion.div>
                              ))}

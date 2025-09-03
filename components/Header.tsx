@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { LayoutOption, LanguageOption } from '../types';
 import type { TFunction } from '../App';
@@ -91,7 +90,7 @@ const Header: React.FC<HeaderProps> = ({ layout, language, setLanguage, t }) => 
           </li>
         ))}
       </ul>
-      <div className={`flex items-center space-x-4 ${isMobile ? 'mt-12 border-t border-gray-500/20 pt-8' : 'ml-8'}`}>
+      <div className={`flex items-center space-x-4 ${isMobile ? 'mt-12 border-t border-[var(--color-text-secondary)]/20 pt-8' : 'ml-8'}`}>
         <button 
           onClick={() => setLanguage(LanguageOption.English)}
           className={`text-sm font-semibold ${language === LanguageOption.English ? 'text-[var(--color-primary)]' : 'text-[var(--color-text-secondary)] hover:text-[var(--color-primary)]'}`}
@@ -131,7 +130,7 @@ const Header: React.FC<HeaderProps> = ({ layout, language, setLanguage, t }) => 
         </div>
 
         {/* Mobile Menu Overlay */}
-        <div className={`fixed inset-0 z-40 bg-[var(--color-background)] transition-transform duration-300 ease-in-out md:hidden ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}>
+        <div className={`fixed inset-0 z-40 bg-[var(--color-background)] border-l border-[var(--color-text-secondary)]/20 transition-transform duration-300 ease-in-out md:hidden ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}>
           <nav className="flex flex-col items-center justify-center h-full">
             <NavContent isMobile={true}/>
           </nav>
