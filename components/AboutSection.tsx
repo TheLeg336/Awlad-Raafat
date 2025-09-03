@@ -99,9 +99,9 @@ const AboutSection: React.FC<AboutSectionProps> = ({ layout, t }) => {
                             <p>{content.about.p2}</p>
                         </div>
                     </motion.div>
-                    <motion.div className="grid grid-cols-2 gap-4" variants={staggeredContainer}>
+                    <motion.div className="grid grid-cols-1 sm:grid-cols-2 gap-4" variants={staggeredContainer}>
                         <motion.img variants={sectionVariants} src="https://picsum.photos/seed/craft1/400/400" alt="Detail 1" className="w-full object-cover shadow-lg"/>
-                        <motion.img variants={sectionVariants} src="https://picsum.photos/seed/craft2/400/400" alt="Detail 2" className="w-full object-cover mt-8 shadow-lg"/>
+                        <motion.img variants={sectionVariants} src="https://picsum.photos/seed/craft2/400/400" alt="Detail 2" className="w-full object-cover mt-0 sm:mt-8 shadow-lg"/>
                     </motion.div>
                 </motion.div>
             );

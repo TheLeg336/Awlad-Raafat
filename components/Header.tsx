@@ -58,7 +58,7 @@ const Header: React.FC<HeaderProps> = ({ layout, language, setLanguage, t }) => 
 
   const NavContent: React.FC<{isMobile?: boolean}> = ({ isMobile }) => (
     <>
-      <ul className={`flex ${isMobile ? 'flex-col text-2xl space-y-8' : `items-center ${navClasses[layout]} space-x-8`}`}>
+      <ul className={`flex ${isMobile ? 'flex-col text-xl space-y-6' : `items-center ${navClasses[layout]} space-x-8`}`}>
         {navLinks.map(link => (
           <li key={link.key} onClick={() => isMobile && setIsMenuOpen(false)}>
             <a href={link.href} className="text-[var(--color-text-secondary)] hover:text-[var(--color-primary)] transition-colors duration-300">{t(link.key)}</a>

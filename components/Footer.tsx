@@ -82,7 +82,7 @@ const Footer: React.FC<FooterProps> = ({ layout, t }) => {
 
                     {/* Contact Info */}
                     <motion.div variants={itemVariants}>
-                        <h4 className="text-lg font-semibold mb-4">{t('footer_contact_header')}</h4>
+                        <h4 className="text-base sm:text-lg font-semibold mb-4">{t('footer_contact_header')}</h4>
                         <ul className="space-y-2 text-sm">
                             <li><strong>{t('footer_egypt_office')}:</strong> +20 123 456 7890</li>
                             <li><strong>{t('footer_us_office')}:</strong> +1 123 456 7890</li>
@@ -92,7 +92,7 @@ const Footer: React.FC<FooterProps> = ({ layout, t }) => {
 
                     {/* Quick Links */}
                     <motion.div variants={itemVariants}>
-                        <h4 className="text-lg font-semibold mb-4">{t('footer_quick_links')}</h4>
+                        <h4 className="text-base sm:text-lg font-semibold mb-4">{t('footer_quick_links')}</h4>
                         <ul className="space-y-2 text-sm">
                             <li><a href="#" className="hover:text-[var(--color-primary)]">{t('nav_about')}</a></li>
                             <li><a href="#" className="hover:text-[var(--color-primary)]">{t('nav_contact')}</a></li>
@@ -101,7 +101,7 @@ const Footer: React.FC<FooterProps> = ({ layout, t }) => {
                     
                     {/* Social Media */}
                     <motion.div variants={itemVariants}>
-                        <h4 className="text-lg font-semibold mb-4">{t('footer_social_header')}</h4>
+                        <h4 className="text-base sm:text-lg font-semibold mb-4">{t('footer_social_header')}</h4>
                         <div className="flex space-x-4">
                            <SocialIcon>
                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>

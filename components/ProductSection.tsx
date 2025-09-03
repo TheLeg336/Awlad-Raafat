@@ -105,8 +105,8 @@ const ProductSection: React.FC<ProductSectionProps> = ({ layout, t }) => {
                                   <img src={p.imageUrl} alt={t(p.nameKey)} className="w-full shadow-lg" />
                               </div>
                               <div className="md:w-1/2">
-                                  <h3 className="text-3xl font-bold mb-4 text-[var(--color-primary)]">{t(p.nameKey)}</h3>
-                                  <p className="text-lg text-[var(--color-text-secondary)] leading-relaxed">{t('about_p1')}</p>
+                                  <h3 className="text-2xl md:text-3xl font-bold mb-4 text-[var(--color-primary)]">{t(p.nameKey)}</h3>
+                                  <p className="text-base md:text-lg text-[var(--color-text-secondary)] leading-relaxed">{t('about_p1')}</p>
                               </div>
                           </motion.div>
                       ))}
@@ -114,7 +114,7 @@ const ProductSection: React.FC<ProductSectionProps> = ({ layout, t }) => {
                 );
             case LayoutOption.Artistic:
                 return (
-                    <motion.div className="grid grid-cols-2 md:grid-cols-4 gap-4 auto-rows-[minmax(0,_1fr)] h-auto md:h-[70vh]" variants={gridVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }}>
+                    <motion.div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 auto-rows-[minmax(0,_1fr)] h-auto md:h-[70vh]" variants={gridVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }}>
                         <motion.div variants={itemVariants} className="col-span-2 row-span-2"><ProductCardArtistic product={PRODUCTS[0]} t={t} className="w-full h-full" /></motion.div>
                         <motion.div variants={itemVariants} className="col-span-1 row-span-1"><ProductCardArtistic product={PRODUCTS[1]} t={t} className="w-full h-full" /></motion.div>
                         <motion.div variants={itemVariants} className="col-span-1 row-span-1"><ProductCardArtistic product={PRODUCTS[2]} t={t} className="w-full h-full" /></motion.div>

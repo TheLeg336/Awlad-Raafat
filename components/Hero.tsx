@@ -17,7 +17,7 @@ const Hero: React.FC<HeroProps> = ({ layout, t }) => {
   const heroConfig = {
     [LayoutOption.Minimalist]: {
       bgImage: 'https://picsum.photos/seed/minimalist/1920/1080',
-      containerClass: 'min-h-[80vh] flex items-center',
+      containerClass: 'min-h-[70vh] lg:min-h-[80vh] flex items-center',
       contentClass: 'text-center w-full',
       titleClass: 'text-4xl sm:text-5xl md:text-7xl font-bold mb-4',
       subtitleClass: 'text-lg md:text-xl max-w-2xl mx-auto',
@@ -26,7 +26,7 @@ const Hero: React.FC<HeroProps> = ({ layout, t }) => {
     },
     [LayoutOption.Classic]: {
       bgImage: 'https://picsum.photos/seed/classic/1920/1080',
-      containerClass: 'min-h-[70vh] flex items-center',
+      containerClass: 'min-h-[60vh] lg:min-h-[70vh] flex items-center',
       contentClass: 'bg-[var(--color-background)] bg-opacity-70 p-8 md:p-16 w-full md:w-1/2',
       titleClass: 'text-4xl md:text-6xl mb-4',
       subtitleClass: 'text-lg md:text-xl',
@@ -53,9 +53,9 @@ const Hero: React.FC<HeroProps> = ({ layout, t }) => {
     },
     [LayoutOption.ArchitecturalBold]: {
         bgImage: 'https://picsum.photos/seed/architect/1920/1080',
-        containerClass: 'min-h-[90vh] flex items-center',
+        containerClass: 'min-h-[70vh] lg:min-h-[90vh] flex items-center',
         contentClass: 'text-left w-full md:w-3/5 lg:w-1/2',
-        titleClass: 'text-5xl sm:text-6xl md:text-9xl font-extrabold tracking-tighter text-[var(--color-text-primary)]',
+        titleClass: 'text-5xl md:text-7xl lg:text-9xl font-extrabold tracking-tighter text-[var(--color-text-primary)]',
         subtitleClass: 'text-lg md:text-2xl text-[var(--color-text-secondary)] mt-4 max-w-lg',
         ctaClass: 'mt-8 px-12 py-4 bg-[var(--color-primary)] text-[var(--color-background)] font-bold uppercase tracking-wider transition-all duration-300 transform hover:scale-105 hover:shadow-lg',
         content: content.hero['architectural-bold'],
