@@ -22,7 +22,6 @@ const Hero: React.FC<HeroProps> = ({ layout, t }) => {
 
   const currentConfig = {
       bgImage: 'https://picsum.photos/seed/sleek/1920/1080',
-      containerClass: 'h-full flex items-center justify-center text-center',
       contentClass: 'w-full text-[var(--color-text-primary)]',
       titleClass: 'text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold tracking-tighter mb-4',
       subtitleClass: 'text-base sm:text-lg md:text-xl max-w-3xl mx-auto text-[var(--color-text-secondary)]',
@@ -61,27 +60,25 @@ const Hero: React.FC<HeroProps> = ({ layout, t }) => {
       />
       <div className="absolute inset-0 z-[1] bg-black/20" /> {/* Optional overlay for text readability */}
 
-      <div className={`${currentConfig.containerClass} relative z-[2]`}>
-        <div className="container mx-auto px-6">
-          <motion.div
-            className={currentConfig.contentClass}
-            variants={containerVariants}
-            initial="hidden"
-            animate="visible"
+      <div className="relative z-[2] h-full container mx-auto px-6 flex flex-col items-center justify-center text-center">
+        <motion.div
+          className={currentConfig.contentClass}
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+        >
+          <motion.h1 variants={itemVariants} className={currentConfig.titleClass}>{currentConfig.content.title}</motion.h1>
+          <motion.p variants={itemVariants} className={currentConfig.subtitleClass}>{currentConfig.content.subtitle}</motion.p>
+          <motion.button 
+            variants={itemVariants} 
+            className={currentConfig.ctaClass}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.98 }}
+            transition={{ type: "spring", stiffness: 400, damping: 17 }}
           >
-            <motion.h1 variants={itemVariants} className={currentConfig.titleClass}>{currentConfig.content.title}</motion.h1>
-            <motion.p variants={itemVariants} className={currentConfig.subtitleClass}>{currentConfig.content.subtitle}</motion.p>
-            <motion.button 
-              variants={itemVariants} 
-              className={currentConfig.ctaClass}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.98 }}
-              transition={{ type: "spring", stiffness: 400, damping: 17 }}
-            >
-              {currentConfig.content.cta}
-            </motion.button>
-          </motion.div>
-        </div>
+            {currentConfig.content.cta}
+          </motion.button>
+        </motion.div>
       </div>
     </div>
   );
