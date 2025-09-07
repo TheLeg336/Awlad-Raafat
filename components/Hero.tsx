@@ -23,7 +23,7 @@ const Hero: React.FC<HeroProps> = ({ layout, t }) => {
   const currentConfig = {
       bgImage: 'https://picsum.photos/seed/sleek/1920/1080',
       contentClass: 'w-full text-[var(--color-text-primary)]',
-      titleClass: 'text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold tracking-tighter mb-4',
+      titleClass: 'text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold tracking-tight mb-4',
       subtitleClass: 'text-base sm:text-lg md:text-xl max-w-3xl mx-auto text-[var(--color-text-secondary)]',
       ctaClass: 'mt-8 px-8 py-3 bg-[var(--color-primary)] text-white rounded-full hover:bg-opacity-80 font-semibold transition-colors duration-300 logo-shine button-shine-onload',
       content: content.hero['modern-sleek'],

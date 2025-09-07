@@ -25,13 +25,27 @@ const getInitialThemeMode = (): ThemeMode => {
   return COLOR_SCHEMES[ColorSchemeOption.BlackGold].defaultMode;
 };
 
+const getInitialLanguage = (): LanguageOption => {
+  if (typeof window !== 'undefined') {
+    const storedLang = localStorage.getItem('language');
+    if (storedLang === LanguageOption.English || storedLang === LanguageOption.Arabic) {
+      return storedLang;
+    }
+    // Check browser preference if no language is stored
+    if (navigator.language.startsWith('ar')) {
+      return LanguageOption.Arabic;
+    }
+  }
+  return LanguageOption.English; // Default to English
+};
+
 
 const App: React.FC = () => {
   const layout = LayoutOption.ModernSleek;
   const colorScheme = ColorSchemeOption.BlackGold;
   const typography = TypographyOption.LuxeModern;
 
-  const [language, setLanguage] = useState<LanguageOption>(LanguageOption.English);
+  const [language, setLanguage] = useState<LanguageOption>(getInitialLanguage);
   const [themeMode, setThemeMode] = useState<ThemeMode>(getInitialThemeMode);
   const headerRef = useRef<HTMLElement>(null);
 
@@ -71,13 +85,17 @@ const App: React.FC = () => {
   useEffect(() => {
     const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
     const handleChange = (e: MediaQueryListEvent) => {
-        setThemeMode(e.matches ? 'dark' : 'light');
+        // Only change theme if user hasn't manually overridden it
+        if (!localStorage.getItem('themeMode')) {
+            setThemeMode(e.matches ? 'dark' : 'light');
+        }
     };
     mediaQuery.addEventListener('change', handleChange);
     return () => mediaQuery.removeEventListener('change', handleChange);
   }, []);
 
   useEffect(() => {
+    localStorage.setItem('language', language);
     document.documentElement.lang = language;
     document.documentElement.dir = language === LanguageOption.Arabic ? 'rtl' : 'ltr';
   }, [language]);
