@@ -40,7 +40,7 @@ const ProductSection: React.FC<ProductSectionProps> = ({ layout, t }) => {
     return (
         <section id="shop" className="bg-[var(--color-background)]">
             <div className="container mx-auto px-6">
-                <div className="md:static sticky top-0 z-10 bg-[var(--color-background)] pt-16 pb-8 md:pt-0 md:pb-0">
+                <div className="md:static sticky top-0 z-10 bg-[var(--color-background)] pt-12 pb-6 md:pt-0 md:pb-0">
                     <motion.div 
                         className="text-center md:mb-20" 
                         variants={sectionHeaderVariants} 

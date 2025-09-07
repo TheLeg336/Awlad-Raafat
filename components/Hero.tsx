@@ -22,7 +22,7 @@ const Hero: React.FC<HeroProps> = ({ layout, t }) => {
 
   const currentConfig = {
       bgImage: 'https://picsum.photos/seed/sleek/1920/1080',
-      containerClass: 'h-screen flex items-center justify-center text-center',
+      containerClass: 'h-full flex items-center justify-center text-center',
       contentClass: 'w-full text-[var(--color-text-primary)]',
       titleClass: 'text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold tracking-tighter mb-4',
       subtitleClass: 'text-base sm:text-lg md:text-xl max-w-3xl mx-auto text-[var(--color-text-secondary)]',
@@ -50,7 +50,7 @@ const Hero: React.FC<HeroProps> = ({ layout, t }) => {
   return (
     <div
       ref={ref}
-      className="relative text-[var(--color-text-primary)] transition-all duration-500 h-screen overflow-hidden"
+      className="relative text-[var(--color-text-primary)] transition-all duration-500 h-[50vh] md:h-screen overflow-hidden"
     >
       <motion.div
         className="absolute inset-0 z-0 bg-cover bg-center"
