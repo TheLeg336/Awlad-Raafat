@@ -1,5 +1,3 @@
-
-
 import React, { useState, useEffect, useCallback, useRef, useLayoutEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { LayoutOption, ColorSchemeOption, LanguageOption, TypographyOption } from './types';
@@ -14,13 +12,27 @@ import ThemeToggle from './components/ThemeToggle';
 export type TFunction = (key: string) => string;
 type ThemeMode = 'light' | 'dark';
 
+const getInitialThemeMode = (): ThemeMode => {
+  if (typeof window !== 'undefined') {
+    const storedTheme = localStorage.getItem('themeMode');
+    if (storedTheme === 'light' || storedTheme === 'dark') {
+      return storedTheme;
+    }
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      return 'dark';
+    }
+  }
+  return COLOR_SCHEMES[ColorSchemeOption.BlackGold].defaultMode;
+};
+
+
 const App: React.FC = () => {
   const layout = LayoutOption.ModernSleek;
   const colorScheme = ColorSchemeOption.BlackGold;
   const typography = TypographyOption.LuxeModern;
 
   const [language, setLanguage] = useState<LanguageOption>(LanguageOption.English);
-  const [themeMode, setThemeMode] = useState<ThemeMode>(COLOR_SCHEMES[colorScheme].defaultMode);
+  const [themeMode, setThemeMode] = useState<ThemeMode>(getInitialThemeMode);
   const headerRef = useRef<HTMLElement>(null);
 
   useLayoutEffect(() => {
@@ -37,6 +49,7 @@ const App: React.FC = () => {
   }, []);
 
   useEffect(() => {
+    localStorage.setItem('themeMode', themeMode);
     const root = document.documentElement;
     const scheme = COLOR_SCHEMES[colorScheme][themeMode];
     root.style.setProperty('--color-primary', scheme.primary);
@@ -54,6 +67,15 @@ const App: React.FC = () => {
       root.style.scrollBehavior = 'auto';
     };
   }, [colorScheme, themeMode]);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    const handleChange = (e: MediaQueryListEvent) => {
+        setThemeMode(e.matches ? 'dark' : 'light');
+    };
+    mediaQuery.addEventListener('change', handleChange);
+    return () => mediaQuery.removeEventListener('change', handleChange);
+  }, []);
 
   useEffect(() => {
     document.documentElement.lang = language;

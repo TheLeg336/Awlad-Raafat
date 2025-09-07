@@ -68,7 +68,6 @@ const Hero: React.FC<HeroProps> = ({ layout, t }) => {
           animate="visible"
         >
           <motion.h1 variants={itemVariants} className={currentConfig.titleClass}>{currentConfig.content.title}</motion.h1>
-          <motion.p variants={itemVariants} className={currentConfig.subtitleClass}>{currentConfig.content.subtitle}</motion.p>
           <motion.button 
             variants={itemVariants} 
             className={currentConfig.ctaClass}

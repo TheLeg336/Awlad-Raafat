@@ -50,7 +50,6 @@ export const getTextContent = (t: TFunction) => ({
   hero: {
     'modern-sleek': {
       title: t('hero_sleek_title'),
-      subtitle: t('hero_sleek_subtitle'),
       cta: t('hero_cta_learn_more')
     }
   },
@@ -71,7 +70,6 @@ export const TEXTS: Record<string, Record<string, string>> = {
     lang_toggle_en: 'English',
     lang_toggle_ar: 'العربية',
     hero_sleek_title: 'The Future of Design',
-    hero_sleek_subtitle: 'Engineered for simplicity. Crafted for life.',
     hero_cta_learn_more: 'Learn More',
     products_title: 'Featured Collections',
     products_subtitle: 'Hand-selected pieces that define elegance and comfort.',
@@ -86,7 +84,7 @@ export const TEXTS: Record<string, Record<string, string>> = {
     footer_new_minya_branch_address: 'Corner Plaza Mall, 2nd Floor, Third District',
     footer_phone_title: 'Contact Us',
     footer_phone_label: 'Phone:',
-    footer_phone_number: '+20 123 456 7890',
+    footer_phone_number: '01010279777',
     footer_hours: 'Hours: 12 PM - 10 PM (Mon-Sat)',
     footer_copyright: '© 2024 Awlad Raafat. All Rights Reserved.',
     product_sofa_name: 'The Nile Sofa',
@@ -111,7 +109,6 @@ export const TEXTS: Record<string, Record<string, string>> = {
     lang_toggle_en: 'English',
     lang_toggle_ar: 'العربية',
     hero_sleek_title: 'مستقبل التصميم',
-    hero_sleek_subtitle: 'مصممة للبساطة. مصنوعة للحياة.',
     hero_cta_learn_more: 'اعرف المزيد',
     products_title: 'مجموعاتنا المميزة',
     products_subtitle: 'قطعٌ فنية مختارة بعناية لتعيد تعريف الأناقة والراحة في مساحاتكم.',
@@ -121,12 +118,12 @@ export const TEXTS: Record<string, Record<string, string>> = {
     footer_cairo_branch_title: 'فرع القاهرة',
     footer_cairo_branch_address: '٦٦ شارع المؤرخ محمد رفعت بجوار كنتاكي خلف السندباد، النزهة الجديدة',
     footer_minya_branch_title: 'فرع المنيا',
-    footer_minya_branch_address: '٦ شارع مصطفى كامل، أرض سلطان',
+    footer_minya_branch_address: '٦ شارع مصطفي كامل، أرض سلطان',
     footer_new_minya_branch_title: 'فرع المنيا الجديدة',
-    footer_new_minya_branch_address: 'مول كورنال بلازا، الدور الثاني، الحي الثالث',
+    footer_new_minya_branch_address: 'مول كورنر بلازا، الدور الثاني، الحي الثالث',
     footer_phone_title: 'اتصل بنا',
     footer_phone_label: 'الهاتف:',
-    footer_phone_number: '+20 123 456 7890',
+    footer_phone_number: '01010279777',
     footer_hours: 'ساعات العمل: ١٢ ظهراً - ١٠ مساءً (من الإثنين إلى السبت)',
     footer_copyright: '© 2024 أولاد رأفت. جميع الحقوق محفوظة.',
     product_sofa_name: 'أريكة النيل',
