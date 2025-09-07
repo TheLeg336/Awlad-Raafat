@@ -62,7 +62,10 @@ const Footer: React.FC<FooterProps> = ({ layout, t }) => {
 
                     <motion.div variants={itemVariants}>
                         <h3 className="text-xl font-bold text-[var(--color-primary)] mb-3">{t('footer_phone_title')}</h3>
-                        <p className="opacity-80 leading-relaxed">{t('footer_phone_placeholder')}</p>
+                        <p className="opacity-80 leading-relaxed">
+                          {t('footer_phone_label')}{' '}
+                          <span className="inline-block" dir="ltr">{t('footer_phone_number')}</span>
+                        </p>
                     </motion.div>
                 </div>
 
