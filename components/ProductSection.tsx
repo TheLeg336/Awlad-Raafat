@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { motion, Variants, useScroll, useTransform } from 'framer-motion';
+import { motion, Variants } from 'framer-motion';
 import { LayoutOption, Product } from '../types';
 import { PRODUCTS, getTextContent } from '../constants';
 import type { TFunction } from '../App';
@@ -22,10 +22,6 @@ const ProductCardSleek: React.FC<{ product: Product; t: TFunction }> = ({ produc
 const ProductSection: React.FC<ProductSectionProps> = ({ layout, t }) => {
     const content = getTextContent(t);
     const ref = useRef(null);
-    const { scrollYProgress } = useScroll({
-        target: ref,
-        offset: ["start end", "end start"]
-    });
 
     const sectionHeaderVariants: Variants = {
         hidden: { opacity: 0, y: 30 },
@@ -34,7 +30,7 @@ const ProductSection: React.FC<ProductSectionProps> = ({ layout, t }) => {
 
     const gridVariants: Variants = {
         hidden: {},
-        visible: { transition: { staggerChildren: 0.3 } }
+        visible: { transition: { staggerChildren: 0.2 } }
     };
     
     const itemVariants: Variants = {
@@ -49,15 +45,12 @@ const ProductSection: React.FC<ProductSectionProps> = ({ layout, t }) => {
                     <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-[var(--color-text-primary)]">{content.products.title}</h2>
                     <p className="text-md sm:text-lg text-[var(--color-text-secondary)] mt-4 max-w-2xl mx-auto">{content.products.subtitle}</p>
                 </motion.div>
-                <motion.div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12" variants={gridVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }}>
-                    {PRODUCTS.slice(0, 3).map((p, index) => {
-                        // Parallax effect: middle element (index 1) moves the least, outer elements move more.
-                        const y = useTransform(scrollYProgress, [0, 1], [0, (index - 1) * 80]);
+                <motion.div className="grid grid-cols-2 md:grid-cols-3 gap-8 md:gap-12" variants={gridVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }}>
+                    {PRODUCTS.slice(0, 6).map((p) => {
                         return (
                             <motion.div 
                                 key={p.id} 
                                 variants={itemVariants} 
-                                style={{ y }}
                                 whileHover={{ scale: 1.05 }}
                                 transition={{ type: "spring", stiffness: 300, damping: 20 }}
                             >
