@@ -42,7 +42,7 @@ const ProductSection: React.FC<ProductSectionProps> = ({ layout, t }) => {
                     
                     {/* Sticky Header Wrapper */}
                     {/* This div becomes sticky, has a solid background to hide scrolling content, and contains the header component. */}
-                    <div className={`sticky ${STICKY_HEADER_OFFSET} z-10 bg-[var(--color-background)] pt-12 pb-6 md:pt-20 md:pb-10`}>
+                    <div className={`sticky ${STICKY_HEADER_OFFSET} z-10 bg-[var(--color-background)]/80 backdrop-blur-xl shadow-sm pt-12 pb-6 md:pt-20 md:pb-10`}>
                         <ProductSectionHeader t={t} />
                     </div>
 

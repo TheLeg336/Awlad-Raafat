@@ -59,7 +59,7 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className={`${getFontClasses()} bg-[var(--color-background)] text-[var(--color-text-primary)] transition-colors duration-500 overflow-x-hidden`}>
+    <div className={`${getFontClasses()} bg-[var(--color-background)] text-[var(--color-text-primary)] transition-colors duration-500`}>
       <AnimatePresence mode="wait">
         <motion.div
           key={`${layout}-${language}`}
