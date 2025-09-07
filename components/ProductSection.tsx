@@ -40,39 +40,44 @@ const ProductSection: React.FC<ProductSectionProps> = ({ layout, t }) => {
     return (
         <section id="shop" className="bg-[var(--color-background)]">
             <div className="container mx-auto px-6">
-                <div className="md:static sticky top-0 z-10 bg-[var(--color-background)] pt-12 pb-6 md:pt-0 md:pb-0">
+                {/* This wrapper div creates the context for the sticky behavior, ensuring it only applies to this section. */}
+                <div className="relative">
+                    {/* The header is now sticky on all screen sizes. Padding adjusts responsively. */}
+                    <div className="sticky top-0 z-10 bg-[var(--color-background)] pt-12 pb-6 md:pt-20 md:pb-10">
+                        <motion.div 
+                            className="text-center" 
+                            variants={sectionHeaderVariants} 
+                            initial="hidden" 
+                            whileInView="visible" 
+                            viewport={{ once: true }}
+                        >
+                            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-[var(--color-text-primary)]">{content.products.title}</h2>
+                            <p className="text-md sm:text-lg text-[var(--color-text-secondary)] mt-4 max-w-2xl mx-auto">{content.products.subtitle}</p>
+                        </motion.div>
+                    </div>
+
+                    {/* This grid scrolls underneath the sticky header. */}
                     <motion.div 
-                        className="text-center md:mb-20" 
-                        variants={sectionHeaderVariants} 
+                        className="grid grid-cols-2 md:grid-cols-3 gap-8 md:gap-12 pb-16 sm:pb-20 md:pb-28" 
+                        variants={gridVariants} 
                         initial="hidden" 
                         whileInView="visible" 
-                        viewport={{ once: true }}
+                        viewport={{ once: true, amount: 0.1 }}
                     >
-                        <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-[var(--color-text-primary)]">{content.products.title}</h2>
-                        <p className="text-md sm:text-lg text-[var(--color-text-secondary)] mt-4 max-w-2xl mx-auto">{content.products.subtitle}</p>
+                        {PRODUCTS.slice(0, 6).map((p) => {
+                            return (
+                                <motion.div 
+                                    key={p.id} 
+                                    variants={itemVariants} 
+                                    whileHover={{ scale: 1.05 }}
+                                    transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                                >
+                                    <ProductCardSleek product={p} t={t} />
+                                </motion.div>
+                            );
+                        })}
                     </motion.div>
                 </div>
-
-                <motion.div 
-                    className="grid grid-cols-2 md:grid-cols-3 gap-8 md:gap-12 pb-16 sm:pb-20 md:pb-28" 
-                    variants={gridVariants} 
-                    initial="hidden" 
-                    whileInView="visible" 
-                    viewport={{ once: true, amount: 0.1 }}
-                >
-                    {PRODUCTS.slice(0, 6).map((p) => {
-                        return (
-                            <motion.div 
-                                key={p.id} 
-                                variants={itemVariants} 
-                                whileHover={{ scale: 1.05 }}
-                                transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                            >
-                                <ProductCardSleek product={p} t={t} />
-                            </motion.div>
-                        );
-                    })}
-                </motion.div>
             </div>
         </section>
     );
