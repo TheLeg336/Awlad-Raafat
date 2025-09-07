@@ -31,23 +31,24 @@ const ProductSection: React.FC<ProductSectionProps> = ({ layout, t }) => {
         visible: { opacity: 1, scale: 1, y: 0, transition: { duration: 0.5, ease: [0.25, 1, 0.5, 1] } }
     };
     
-    // The main header's height is approx 60px. We use this as the offset for our sticky header.
-    const STICKY_HEADER_OFFSET = 'top-[60px]';
+    // The main header's height is now dynamically set as a CSS variable for a precise sticky offset.
+    const STICKY_HEADER_OFFSET = 'top-[var(--header-height)]';
 
     return (
         <section id="shop" className="bg-[var(--color-background)]">
-            <div className="container mx-auto px-6">
-                {/* This div establishes the containing block for the sticky element. */}
-                <div className="relative">
-                    
-                    {/* Sticky Header Wrapper */}
-                    {/* This div becomes sticky, has a solid background to hide scrolling content, and contains the header component. */}
-                    <div className={`sticky ${STICKY_HEADER_OFFSET} z-10 bg-[var(--color-background)]/80 backdrop-blur-xl shadow-sm pt-12 pb-6 md:pt-20 md:pb-10`}>
+            {/* This div establishes the containing block for the sticky element. It's now full-width. */}
+            <div className="relative">
+                
+                {/* Sticky Header Wrapper - This div is full-width */}
+                <div className={`sticky ${STICKY_HEADER_OFFSET} z-10 bg-[var(--color-background)]/80 backdrop-blur-xl shadow-sm`}>
+                    {/* The content inside the header is contained */}
+                    <div className="container mx-auto px-6 pt-12 pb-6 md:pt-20 md:pb-10">
                         <ProductSectionHeader t={t} />
                     </div>
+                </div>
 
-                    {/* Product Grid */}
-                    {/* This grid scrolls underneath the sticky header. */}
+                {/* Product Grid - This is now in its own container to keep it centered */}
+                <div className="container mx-auto px-6">
                     <motion.div 
                         className="grid grid-cols-2 md:grid-cols-3 gap-8 md:gap-12 pb-16 sm:pb-20 md:pb-28" 
                         variants={gridVariants} 

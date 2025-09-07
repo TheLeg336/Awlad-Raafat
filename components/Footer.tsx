@@ -11,7 +11,7 @@ interface FooterProps {
 const Footer: React.FC<FooterProps> = ({ layout, t }) => {
     const containerVariants: Variants = {
         hidden: {},
-        visible: { transition: { staggerChildren: 0.2 } }
+        visible: { transition: { staggerChildren: 0.2, delayChildren: 0.2 } }
     };
 
     const itemVariants: Variants = {
@@ -19,23 +19,59 @@ const Footer: React.FC<FooterProps> = ({ layout, t }) => {
         visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } }
     };
 
+    const titleVariants: Variants = {
+        hidden: { opacity: 0, y: -20 },
+        visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } }
+    };
+
+
     return (
-        <footer className="bg-[var(--color-text-primary)] text-[var(--color-text-secondary)] border-t border-[var(--color-secondary)]/30 py-12 transition-colors duration-500">
+        <footer id="contact" className="bg-[var(--color-text-primary)] text-[var(--color-background)] py-16 sm:py-20 md:py-24 transition-colors duration-500">
             <motion.div 
-                className="container mx-auto px-6 text-sm"
+                className="container mx-auto px-6"
                 initial="hidden" 
                 whileInView="visible" 
-                viewport={{once: true}} 
+                viewport={{once: true, amount: 0.3}} 
                 variants={containerVariants}
             >
-                <div className="flex flex-col md:flex-row justify-between items-center gap-6">
-                    <motion.p variants={itemVariants}>{t('footer_copyright')}</motion.p>
-                    <motion.div variants={itemVariants} className="flex flex-wrap gap-x-6 gap-y-2 justify-center">
-                        <a href="#" className="hover:text-[var(--color-primary)] transition-colors">{t('footer_privacy')}</a>
-                        <a href="#" className="hover:text-[var(--color-primary)] transition-colors">{t('footer_terms')}</a>
-                        <a href="#" className="hover:text-[var(--color-primary)] transition-colors">{t('nav_contact')}</a>
+                <motion.h2 
+                    variants={titleVariants}
+                    className="text-3xl sm:text-4xl text-center font-bold mb-12"
+                >
+                    {t('footer_locations_title')}
+                </motion.h2>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 text-center sm:text-left">
+                    <motion.div variants={itemVariants}>
+                        <h3 className="text-xl font-bold text-[var(--color-primary)] mb-3">{t('footer_cairo_branch_title')}</h3>
+                        <p className="opacity-80 leading-relaxed">{t('footer_cairo_branch_address')}</p>
+                        <p className="opacity-70 text-sm mt-2">{t('footer_hours')}</p>
+                    </motion.div>
+
+                    <motion.div variants={itemVariants}>
+                        <h3 className="text-xl font-bold text-[var(--color-primary)] mb-3">{t('footer_minya_branch_title')}</h3>
+                        <p className="opacity-80 leading-relaxed">{t('footer_minya_branch_address')}</p>
+                        <p className="opacity-70 text-sm mt-2">{t('footer_hours')}</p>
+                    </motion.div>
+                    
+                    <motion.div variants={itemVariants}>
+                        <h3 className="text-xl font-bold text-[var(--color-primary)] mb-3">{t('footer_new_minya_branch_title')}</h3>
+                        <p className="opacity-80 leading-relaxed">{t('footer_new_minya_branch_address')}</p>
+                        <p className="opacity-70 text-sm mt-2">{t('footer_hours')}</p>
+                    </motion.div>
+
+                    <motion.div variants={itemVariants}>
+                        <h3 className="text-xl font-bold text-[var(--color-primary)] mb-3">{t('footer_phone_title')}</h3>
+                        <p className="opacity-80 leading-relaxed">{t('footer_phone_placeholder')}</p>
                     </motion.div>
                 </div>
+
+                <motion.div 
+                    variants={itemVariants} 
+                    className="text-center text-sm text-[var(--color-text-secondary)] mt-16 pt-8 border-t border-[var(--color-secondary)]/30"
+                >
+                    <p>{t('footer_copyright')}</p>
+                </motion.div>
             </motion.div>
         </footer>
     )

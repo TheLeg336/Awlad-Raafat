@@ -1,11 +1,13 @@
-import React, { useState, useEffect, useCallback } from 'react';
+
+
+import React, { useState, useEffect, useCallback, useRef, useLayoutEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { LayoutOption, ColorSchemeOption, LanguageOption, TypographyOption } from './types';
 import { COLOR_SCHEMES, TEXTS } from './constants';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import ProductSection from './components/ProductSection';
-import AboutSection from './components/AboutSection';
+import VisitUsSection from './components/VisitUsSection';
 import Footer from './components/Footer';
 import ThemeToggle from './components/ThemeToggle';
 
@@ -19,6 +21,20 @@ const App: React.FC = () => {
 
   const [language, setLanguage] = useState<LanguageOption>(LanguageOption.English);
   const [themeMode, setThemeMode] = useState<ThemeMode>(COLOR_SCHEMES[colorScheme].defaultMode);
+  const headerRef = useRef<HTMLElement>(null);
+
+  useLayoutEffect(() => {
+    const headerElement = headerRef.current;
+    if (!headerElement) return;
+
+    const observer = new ResizeObserver(() => {
+      document.documentElement.style.setProperty('--header-height', `${headerElement.offsetHeight}px`);
+    });
+
+    observer.observe(headerElement);
+
+    return () => observer.disconnect();
+  }, []);
 
   useEffect(() => {
     const root = document.documentElement;
@@ -68,19 +84,13 @@ const App: React.FC = () => {
           exit={{ opacity: 0 }}
           transition={{ duration: 0.5 }}
         >
-          <Header layout={layout} language={language} setLanguage={setLanguage} t={t} />
+          <Header ref={headerRef} layout={layout} language={language} setLanguage={setLanguage} t={t} />
           <main>
             <Hero layout={layout} t={t} />
-            <section id="shop">
-              <ProductSection layout={layout} t={t} />
-            </section>
-            <section id="about">
-              <AboutSection layout={layout} t={t} />
-            </section>
+            <ProductSection layout={layout} t={t} />
+            <VisitUsSection t={t} />
           </main>
-          <div id="contact">
-            <Footer layout={layout} t={t} />
-          </div>
+          <Footer layout={layout} t={t} />
         </motion.div>
       </AnimatePresence>
       <ThemeToggle themeMode={themeMode} setThemeMode={setThemeMode} />

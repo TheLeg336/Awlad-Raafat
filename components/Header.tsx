@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, forwardRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { LayoutOption, LanguageOption } from '../types';
 import type { TFunction } from '../App';
@@ -10,7 +10,7 @@ interface HeaderProps {
   t: TFunction;
 }
 
-const Header: React.FC<HeaderProps> = ({ layout, language, setLanguage, t }) => {
+const Header = forwardRef<HTMLElement, HeaderProps>(({ layout, language, setLanguage, t }, ref) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const isRtl = language === LanguageOption.Arabic;
 
@@ -30,8 +30,7 @@ const Header: React.FC<HeaderProps> = ({ layout, language, setLanguage, t }) => 
   const navLinks = [
     { key: 'nav_home', href: '#' },
     { key: 'nav_shop', href: '#shop' },
-    { key: 'nav_about', href: '#about' },
-    { key: 'nav_locations', href: '#' },
+    { key: 'nav_about', href: '#visit-us' },
     { key: 'nav_contact', href: '#contact' },
   ];
   
@@ -62,14 +61,14 @@ const Header: React.FC<HeaderProps> = ({ layout, language, setLanguage, t }) => 
 
   const NavContent: React.FC<{isMobile?: boolean}> = ({ isMobile }) => (
     <>
-      <ul className={`flex ${isMobile ? 'flex-col text-xl space-y-8 items-center' : `items-center ${navClass} space-x-8`}`}>
+      <ul className={`flex ${isMobile ? 'flex-col text-xl space-y-10 items-center' : `items-center ${navClass} space-x-8`}`}>
         {navLinks.map(link => (
           <li key={link.key}>
-            <a href={link.href} onClick={(e) => link.href.startsWith('#') ? handleSmoothScroll(e) : setIsMenuOpen(false)} className="nav-link text-[var(--color-text-secondary)] hover:text-[var(--color-primary)] transition-colors duration-300">{t(link.key)}</a>
+            <a href={link.href} onClick={(e) => link.href.startsWith('#') ? handleSmoothScroll(e) : setIsMenuOpen(false)} className={`nav-link text-[var(--color-text-secondary)] hover:text-[var(--color-primary)] transition-colors duration-300 ${isMobile ? 'leading-loose' : ''}`}>{t(link.key)}</a>
           </li>
         ))}
       </ul>
-      <div className={`flex items-center space-x-4 ${isMobile ? 'mt-12 border-t border-[var(--color-text-secondary)]/20 pt-8' : 'md:ml-8'}`}>
+      <div className={`flex items-center ${isMobile ? 'mt-12 border-t border-[var(--color-text-secondary)]/20 pt-8' : 'md:ml-8'}`}>
         <motion.button 
           onClick={() => setLanguage(LanguageOption.English)}
           className={`text-sm font-semibold ${language === LanguageOption.English ? 'text-[var(--color-primary)]' : 'text-[var(--color-text-secondary)] hover:text-[var(--color-primary)]'}`}
@@ -78,7 +77,7 @@ const Header: React.FC<HeaderProps> = ({ layout, language, setLanguage, t }) => 
         >
           {t('lang_toggle_en')}
         </motion.button>
-        <span className="text-[var(--color-text-secondary)]">/</span>
+        <span className="text-[var(--color-text-secondary)] mx-2">/</span>
         <motion.button 
           onClick={() => setLanguage(LanguageOption.Arabic)}
           className={`text-sm font-semibold ${language === LanguageOption.Arabic ? 'text-[var(--color-primary)]' : 'text-[var(--color-text-secondary)] hover:text-[var(--color-primary)]'}`}
@@ -93,7 +92,7 @@ const Header: React.FC<HeaderProps> = ({ layout, language, setLanguage, t }) => 
 
   return (
     <>
-      <header className={`${headerClass} transition-colors duration-500`}>
+      <header ref={ref} className={`${headerClass} transition-colors duration-500`}>
         <div className="container mx-auto px-6 py-4 flex justify-between items-center">
           <div className={`${logoClass} font-heading text-[var(--color-text-primary)]`}>
             <a href="#" className="logo-shine logo-shine-onload">{t('logo')}</a>
@@ -153,6 +152,6 @@ const Header: React.FC<HeaderProps> = ({ layout, language, setLanguage, t }) => 
       </AnimatePresence>
     </>
   );
-};
+});
 
 export default Header;
