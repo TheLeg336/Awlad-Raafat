@@ -1,11 +1,9 @@
-
 import React, { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { LayoutOption, ColorSchemeOption, LanguageOption, TypographyOption } from './types';
 import { COLOR_SCHEMES, TEXTS } from './constants';
 import Header from './components/Header';
 import Hero from './components/Hero';
-import Customizer from './components/Customizer';
 import ProductSection from './components/ProductSection';
 import AboutSection from './components/AboutSection';
 import Footer from './components/Footer';
@@ -15,10 +13,11 @@ export type TFunction = (key: string) => string;
 type ThemeMode = 'light' | 'dark';
 
 const App: React.FC = () => {
-  const [layout, setLayout] = useState<LayoutOption>(LayoutOption.MonochromaticGallery);
-  const [colorScheme, setColorScheme] = useState<ColorSchemeOption>(ColorSchemeOption.IvoryTaupe);
+  const layout = LayoutOption.ModernSleek;
+  const colorScheme = ColorSchemeOption.BlackGold;
+  const typography = TypographyOption.LuxeModern;
+
   const [language, setLanguage] = useState<LanguageOption>(LanguageOption.English);
-  const [typography, setTypography] = useState<TypographyOption>(TypographyOption.LuxeModern);
   const [themeMode, setThemeMode] = useState<ThemeMode>(COLOR_SCHEMES[colorScheme].defaultMode);
 
   useEffect(() => {
@@ -49,26 +48,11 @@ const App: React.FC = () => {
     return TEXTS[language][key] || TEXTS[LanguageOption.English][key] || key;
   }, [language]);
   
-  const handleColorSchemeChange = (scheme: ColorSchemeOption) => {
-      setColorScheme(scheme);
-      setThemeMode(COLOR_SCHEMES[scheme].defaultMode);
-  };
-
   const getFontClasses = () => {
     if (language === 'ar') return 'font-arabic';
     switch (typography) {
-      case TypographyOption.Modern:
-        return 'font-body-modern font-heading-modern';
-      case TypographyOption.Classic:
-        return 'font-body-classic font-heading-classic';
-      case TypographyOption.Contemporary:
-        return 'font-body-contemporary font-heading-contemporary';
       case TypographyOption.LuxeModern:
         return 'font-body-luxe font-heading-luxe';
-      case TypographyOption.RefinedSerif:
-        return 'font-body-refined font-heading-refined';
-      case TypographyOption.ModernSleek:
-        return 'font-body-sleek font-heading-sleek';
       default:
         return '';
     }
@@ -76,14 +60,6 @@ const App: React.FC = () => {
 
   return (
     <div className={`${getFontClasses()} bg-[var(--color-background)] text-[var(--color-text-primary)] transition-colors duration-500 overflow-x-hidden`}>
-      <Customizer 
-        layout={layout} 
-        setLayout={setLayout} 
-        colorScheme={colorScheme}
-        onColorSchemeChange={handleColorSchemeChange}
-        typography={typography}
-        setTypography={setTypography}
-      />
       <AnimatePresence mode="wait">
         <motion.div
           key={`${layout}-${language}`}

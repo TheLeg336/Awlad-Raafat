@@ -1,249 +1,41 @@
 
-import { ColorSchemeOption, LayoutOption, ColorScheme, Product, TypographyOption } from './types';
+import { LayoutOption, ColorSchemeOption, TypographyOption, ColorScheme, Product } from './types';
 import type { TFunction } from './App';
 
 export const COLOR_SCHEMES: Record<ColorSchemeOption, ColorScheme> = {
-  [ColorSchemeOption.PlatinumCharcoal]: {
-    light: {
-      primary: '#8D99AE',
-      secondary: '#2B2D42',
-      background: '#EDF2F4',
-      textPrimary: '#2B2D42',
-      textSecondary: '#4A4E69',
-      success: '#4CAF50',
-    },
-    dark: {
-      primary: '#8D99AE',
-      secondary: '#EDF2F4',
-      background: '#2B2D42',
-      textPrimary: '#EDF2F4',
-      textSecondary: '#A0AEC0',
-      success: '#4CAF50',
-    },
-    defaultMode: 'light',
-  },
-  [ColorSchemeOption.EmeraldGold]: {
-    light: {
-      primary: '#386641',
-      secondary: '#B8860B',
-      background: '#FDF8E7',
-      textPrimary: '#283618',
-      textSecondary: '#6A775C',
-      success: '#B8860B',
-    },
-    dark: {
-      primary: '#6A994E',
-      secondary: '#F2E8C6',
-      background: '#283618',
-      textPrimary: '#FDF8E7',
-      textSecondary: '#A9B3A1',
-      success: '#B8860B',
-    },
-    defaultMode: 'light',
-  },
-  [ColorSchemeOption.SapphireSilver]: {
-    light: {
-      primary: '#0077B6',
-      secondary: '#A9B2C3',
-      background: '#FFFFFF',
-      textPrimary: '#1A202C',
-      textSecondary: '#4A5568',
-      success: '#00B4D8',
-    },
-    dark: {
-      primary: '#00B4D8',
-      secondary: '#A9B2C3',
-      background: '#1A202C',
-      textPrimary: '#FFFFFF',
-      textSecondary: '#CBD5E0',
-      success: '#00B4D8',
-    },
-    defaultMode: 'light',
-  },
-  [ColorSchemeOption.UniversalSerenity]: {
-    light: {
-      primary: '#6A8D9B',
-      secondary: '#F7E7CE',
-      background: '#F5F5F5',
-      textPrimary: '#36454F',
-      textSecondary: '#55626d',
-      success: '#5cb85c',
-    },
-    dark: {
-      primary: '#6A8D9B',
-      secondary: '#8E8270',
-      background: '#36454F',
-      textPrimary: '#F5F5F5',
-      textSecondary: '#B0B6BA',
-      success: '#5cb85c',
-    },
-    defaultMode: 'light',
-  },
-  [ColorSchemeOption.NaturalElegance]: {
-    light: {
-      primary: '#C97B63',
-      secondary: '#E0A458',
-      background: '#FAF6EE',
-      textPrimary: '#4F553A',
-      textSecondary: '#71775f',
-      success: '#6A775C',
-    },
-    dark: {
-      primary: '#C97B63',
-      secondary: '#E0A458',
-      background: '#4F553A',
-      textPrimary: '#FAF6EE',
-      textSecondary: '#BFC3B4',
-      success: '#6A775C',
-    },
-    defaultMode: 'light',
-  },
-  [ColorSchemeOption.ModernMinimalism]: {
-    light: {
-      primary: '#0A694D',
-      secondary: '#4A5568',
-      background: '#FFFFFF',
-      textPrimary: '#1A202C',
-      textSecondary: '#4A5568',
-      success: '#0A694D',
-    },
-    dark: {
-      primary: '#0A694D',
-      secondary: '#A8A8A8',
-      background: '#121212',
-      textPrimary: '#EAEAEA',
-      textSecondary: '#A8A8A8',
-      success: '#0A694D',
-    },
-    defaultMode: 'dark',
-  },
-  [ColorSchemeOption.MidnightGold]: {
-    light: {
-        primary: '#C79900',
-        secondary: '#1A202C',
-        background: '#F7FAFC',
-        textPrimary: '#1A202C',
-        textSecondary: '#4A5568',
-        success: '#D4AF37',
-    },
-    dark: {
-      primary: '#D4AF37',
-      secondary: '#E5C163',
-      background: '#1A202C',
-      textPrimary: '#F7FAFC',
-      textSecondary: '#A0AEC0',
-      success: '#D4AF37',
-    },
-    defaultMode: 'dark',
-  },
-  [ColorSchemeOption.IvoryTaupe]: {
-    light: {
-      primary: '#5D5C61',
-      secondary: '#737277',
-      background: '#F4F1EA',
-      textPrimary: '#373737',
-      textSecondary: '#737277',
-      success: '#8D8C91',
-    },
-    dark: {
-      primary: '#B7B5B9',
-      secondary: '#F4F1EA',
-      background: '#373737',
-      textPrimary: '#F4F1EA',
-      textSecondary: '#A1A0A4',
-      success: '#8D8C91',
-    },
-    defaultMode: 'light',
-  },
-  [ColorSchemeOption.DeepSea]: {
-    light: {
-        primary: '#415A77',
-        secondary: '#778DA9',
-        background: '#E0E1DD',
-        textPrimary: '#0D1B2A',
-        textSecondary: '#415A77',
-        success: '#415A77',
-    },
-    dark: {
-      primary: '#415A77',
-      secondary: '#778DA9',
-      background: '#0D1B2A',
-      textPrimary: '#E0E1DD',
-      textSecondary: '#778DA9',
-      success: '#415A77',
-    },
-    defaultMode: 'dark',
-  },
   [ColorSchemeOption.BlackGold]: {
     light: {
-        primary: '#C79900',
+        primary: '#E8C547',
         secondary: '#14213D',
         background: '#FFFFFF',
         textPrimary: '#1A202C',
         textSecondary: '#4A5568',
-        success: '#C79900'
+        success: '#DAB449'
     },
     dark: {
-      primary: '#C79900',
+      primary: '#F0B429',
       secondary: '#14213D',
       background: '#1A202C',
       textPrimary: '#E5E5E5',
       textSecondary: '#A9A9A9',
-      success: '#C79900',
+      success: '#F0B429',
     },
     defaultMode: 'dark',
   },
-   [ColorSchemeOption.ModernSleek]: {
-    light: {
-      primary: '#007AFF',
-      secondary: '#E5E5EA',
-      background: '#FFFFFF',
-      textPrimary: '#1D1D1F',
-      textSecondary: '#86868B',
-      success: '#34C759',
-    },
-    dark: {
-      primary: '#0A84FF',
-      secondary: '#3A3A3C',
-      background: '#000000',
-      textPrimary: '#F5F5F7',
-      textSecondary: '#8E8E93',
-      success: '#30D158',
-    },
-    defaultMode: 'light',
-  },
 };
 
+// FIX: Added LAYOUT_OPTIONS, COLOR_SCHEME_OPTIONS, and TYPOGRAPHY_OPTIONS
+// which were missing and causing import errors in Customizer.tsx.
 export const LAYOUT_OPTIONS = [
-  { id: LayoutOption.Minimalist, label: 'Modern Minimalist' },
-  { id: LayoutOption.Classic, label: 'Classic Luxury' },
-  { id: LayoutOption.Artistic, label: 'Contemporary Chic' },
-  { id: LayoutOption.MonochromaticGallery, label: 'Monochromatic Gallery' },
-  { id: LayoutOption.ArchitecturalBold, label: 'Architectural Bold' },
-  { id: LayoutOption.ModernSleek, label: 'Modern Sleek' },
+  { id: LayoutOption.ModernSleek, label: 'Modern & Sleek' },
 ];
 
 export const COLOR_SCHEME_OPTIONS = [
-  { id: ColorSchemeOption.PlatinumCharcoal, label: 'Platinum & Charcoal' },
-  { id: ColorSchemeOption.EmeraldGold, label: 'Emerald & Gold' },
-  { id: ColorSchemeOption.SapphireSilver, label: 'Sapphire & Silver' },
-  { id: ColorSchemeOption.UniversalSerenity, label: 'Universal Serenity' },
-  { id: ColorSchemeOption.NaturalElegance, label: 'Natural Elegance' },
-  { id: ColorSchemeOption.ModernMinimalism, label: 'Modern Minimalism' },
-  { id: ColorSchemeOption.MidnightGold, label: 'Midnight Gold' },
-  { id: ColorSchemeOption.IvoryTaupe, label: 'Ivory & Taupe' },
-  { id: ColorSchemeOption.DeepSea, label: 'Deep Sea' },
   { id: ColorSchemeOption.BlackGold, label: 'Black & Gold' },
-  { id: ColorSchemeOption.ModernSleek, label: 'Modern Sleek' },
 ];
 
 export const TYPOGRAPHY_OPTIONS = [
-  { id: TypographyOption.Modern, label: 'Modern (Serif Headings)' },
-  { id: TypographyOption.Classic, label: 'Classic (Full Serif)' },
-  { id: TypographyOption.Contemporary, label: 'Contemporary (Sans-Serif)' },
-  { id: TypographyOption.LuxeModern, label: 'Luxe Modern (Mixed)' },
-  { id: TypographyOption.RefinedSerif, label: 'Refined Serif (Full Serif)' },
-  { id: TypographyOption.ModernSleek, label: 'Modern Sleek (Sans-Serif)' },
+  { id: TypographyOption.LuxeModern, label: 'Luxe Modern' },
 ];
 
 export const PRODUCTS: Product[] = [

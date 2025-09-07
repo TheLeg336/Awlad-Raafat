@@ -1,5 +1,5 @@
-
 import React from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 type ThemeMode = 'light' | 'dark';
 
@@ -35,30 +35,51 @@ const ThemeToggle: React.FC<ThemeToggleProps> = ({ themeMode, setThemeMode }) =>
     setThemeMode(isDark ? 'light' : 'dark');
   };
 
+  // FIX: Added 'as const' to the spring animation configuration.
+  // This ensures that TypeScript infers the 'type' property as the literal "spring"
+  // instead of a generic string, resolving the type incompatibility with Framer Motion's 'transition' prop.
+  const spring = {
+    type: "spring",
+    stiffness: 700,
+    damping: 30
+  } as const;
+
   return (
     <div className="fixed bottom-6 right-6 z-50">
-      <label htmlFor="theme-toggle" className="flex items-center cursor-pointer">
-        <div className="relative">
-          <input
-            type="checkbox"
-            id="theme-toggle"
-            className="sr-only"
-            checked={isDark}
-            onChange={handleToggle}
-          />
-          <div className="block w-14 h-8 rounded-full" style={{backgroundColor: 'var(--color-text-secondary)', opacity: 0.4}}></div>
-          <div
-            className={`dot absolute left-1 top-1 w-6 h-6 rounded-full transition-transform duration-300 ease-in-out flex items-center justify-center`}
-            style={{ 
-                transform: isDark ? 'translateX(100%)' : 'translateX(0)',
-                backgroundColor: 'var(--color-background)',
-                color: 'var(--color-text-primary)'
-            }}
-          >
-            {isDark ? <MoonIcon /> : <SunIcon />}
-          </div>
-        </div>
-      </label>
+      <div
+        className="w-14 h-8 flex items-center rounded-full p-1 cursor-pointer transition-colors"
+        style={{
+          backgroundColor: isDark ? 'rgba(255, 255, 255, 0.2)' : 'rgba(0, 0, 0, 0.2)',
+          justifyContent: isDark ? 'flex-end' : 'flex-start'
+        }}
+        onClick={handleToggle}
+        aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
+        role="switch"
+        aria-checked={isDark}
+      >
+        <motion.div
+          className="w-6 h-6 rounded-full flex items-center justify-center"
+          style={{
+            backgroundColor: 'var(--color-background)',
+            color: 'var(--color-text-primary)'
+          }}
+          layout
+          transition={spring}
+          whileHover={{ scale: 1.1 }}
+        >
+          <AnimatePresence mode="wait" initial={false}>
+            <motion.div
+              key={isDark ? 'moon' : 'sun'}
+              initial={{ y: -15, opacity: 0, rotate: -90 }}
+              animate={{ y: 0, opacity: 1, rotate: 0 }}
+              exit={{ y: 15, opacity: 0, rotate: 90 }}
+              transition={{ duration: 0.25 }}
+            >
+              {isDark ? <MoonIcon /> : <SunIcon />}
+            </motion.div>
+          </AnimatePresence>
+        </motion.div>
+      </div>
     </div>
   );
 };
