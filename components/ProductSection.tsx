@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import { motion, Variants } from 'framer-motion';
 import { LayoutOption, Product } from '../types';
 import { PRODUCTS, getTextContent } from '../constants';
@@ -21,7 +21,6 @@ const ProductCardSleek: React.FC<{ product: Product; t: TFunction }> = ({ produc
 
 const ProductSection: React.FC<ProductSectionProps> = ({ layout, t }) => {
     const content = getTextContent(t);
-    const ref = useRef(null);
 
     const sectionHeaderVariants: Variants = {
         hidden: { opacity: 0, y: 30 },
@@ -39,13 +38,28 @@ const ProductSection: React.FC<ProductSectionProps> = ({ layout, t }) => {
     };
 
     return (
-        <section ref={ref} className="py-16 sm:py-20 md:py-28 overflow-hidden">
+        <section id="shop" className="bg-[var(--color-background)]">
             <div className="container mx-auto px-6">
-                <motion.div className="text-center mb-16 md:mb-20" variants={sectionHeaderVariants} initial="hidden" whileInView="visible" viewport={{ once: true }}>
-                    <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-[var(--color-text-primary)]">{content.products.title}</h2>
-                    <p className="text-md sm:text-lg text-[var(--color-text-secondary)] mt-4 max-w-2xl mx-auto">{content.products.subtitle}</p>
-                </motion.div>
-                <motion.div className="grid grid-cols-2 md:grid-cols-3 gap-8 md:gap-12" variants={gridVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }}>
+                <div className="md:static sticky top-0 z-10 bg-[var(--color-background)] pt-16 pb-8 md:pt-0 md:pb-0">
+                    <motion.div 
+                        className="text-center md:mb-20" 
+                        variants={sectionHeaderVariants} 
+                        initial="hidden" 
+                        whileInView="visible" 
+                        viewport={{ once: true }}
+                    >
+                        <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-[var(--color-text-primary)]">{content.products.title}</h2>
+                        <p className="text-md sm:text-lg text-[var(--color-text-secondary)] mt-4 max-w-2xl mx-auto">{content.products.subtitle}</p>
+                    </motion.div>
+                </div>
+
+                <motion.div 
+                    className="grid grid-cols-2 md:grid-cols-3 gap-8 md:gap-12 pb-16 sm:pb-20 md:pb-28" 
+                    variants={gridVariants} 
+                    initial="hidden" 
+                    whileInView="visible" 
+                    viewport={{ once: true, amount: 0.1 }}
+                >
                     {PRODUCTS.slice(0, 6).map((p) => {
                         return (
                             <motion.div 
