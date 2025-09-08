@@ -1,7 +1,12 @@
 
 
+
 import { LayoutOption, ColorSchemeOption, TypographyOption, ColorScheme, Product } from './types';
 import type { TFunction } from './App';
+
+export const WHITELISTED_EDITORS = [
+  'admin@awladraafat.com', // Replace with your whitelisted administrator emails
+];
 
 export const COLOR_SCHEMES: Record<ColorSchemeOption, ColorScheme> = {
   [ColorSchemeOption.BlackGold]: {

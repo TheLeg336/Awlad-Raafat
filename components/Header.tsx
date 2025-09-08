@@ -2,26 +2,26 @@ import React, { useState, useEffect, forwardRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { LayoutOption, LanguageOption } from '../types';
 import type { TFunction } from '../App';
+import EditableText from './EditableText';
 
 interface HeaderProps {
   layout: LayoutOption;
   language: LanguageOption;
   setLanguage: (lang: LanguageOption) => void;
   t: TFunction;
+  onUpdateText: (key: string, value: string) => void;
 }
 
-const Header = forwardRef<HTMLElement, HeaderProps>(({ layout, language, setLanguage, t }, ref) => {
+const Header = forwardRef<HTMLElement, HeaderProps>(({ layout, language, setLanguage, t, onUpdateText }, ref) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const isRtl = language === LanguageOption.Arabic;
 
   useEffect(() => {
-    // Prevent scrolling when mobile menu is open
     if (isMenuOpen) {
       document.body.style.overflow = 'hidden';
     } else {
       document.body.style.overflow = 'unset';
     }
-    // Cleanup on component unmount
     return () => {
       document.body.style.overflow = 'unset';
     };
@@ -36,7 +36,7 @@ const Header = forwardRef<HTMLElement, HeaderProps>(({ layout, language, setLang
   
   const handleSmoothScroll = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
     e.preventDefault();
-    setIsMenuOpen(false); // Close menu on link click
+    setIsMenuOpen(false);
     const href = e.currentTarget.getAttribute('href');
     if (href && href.startsWith('#')) {
       const targetId = href.substring(1);
@@ -95,7 +95,9 @@ const Header = forwardRef<HTMLElement, HeaderProps>(({ layout, language, setLang
       <header ref={ref} className={`${headerClass} transition-colors duration-500`}>
         <div className="container mx-auto px-6 py-4 flex justify-between items-center">
           <div className={`${logoClass} font-heading text-[var(--color-text-primary)]`}>
-            <a href="#" className="logo-shine logo-shine-onload">{t('logo')}</a>
+             <EditableText textKey="logo" onUpdate={onUpdateText}>
+                <a href="#" className="logo-shine logo-shine-onload">{t('logo')}</a>
+             </EditableText>
           </div>
 
           <nav className="hidden md:flex items-center">

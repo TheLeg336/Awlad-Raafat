@@ -38,4 +38,8 @@ export interface Product {
   imageUrl: string;
 }
 
-export type CustomImages = Record<string, string>;
+export interface User {
+  name: string;
+  email: string;
+  picture: string;
+}

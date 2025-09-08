@@ -1,18 +1,42 @@
 import React, { useState, useEffect, useCallback, useRef, useLayoutEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { LayoutOption, ColorSchemeOption, LanguageOption, TypographyOption, CustomImages } from './types';
-import { COLOR_SCHEMES, TEXTS, PRODUCTS } from './constants';
+import { LayoutOption, ColorSchemeOption, LanguageOption, TypographyOption, User } from './types';
+import { COLOR_SCHEMES, TEXTS } from './constants';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import ProductSection from './components/ProductSection';
 import VisitUsSection from './components/VisitUsSection';
 import Footer from './components/Footer';
 import ThemeToggle from './components/ThemeToggle';
+import { useAuth } from './AuthContext';
+import LoginPage from './components/LoginPage';
 import EditModeBanner from './components/EditModeBanner';
-import ImageEditModal from './components/ImageEditModal';
+import EditableText from './components/EditableText';
 
 export type TFunction = (key: string) => string;
 type ThemeMode = 'light' | 'dark';
+type UpdateTextFunction = (key: string, value: string) => void;
+
+const STORED_TEXTS_KEY = 'awlad-raafat-texts';
+
+const getInitialTexts = (): Record<string, Record<string, string>> => {
+  try {
+    const stored = localStorage.getItem(STORED_TEXTS_KEY);
+    if (stored) {
+      const parsed = JSON.parse(stored);
+      // A simple merge, stored values override defaults
+      return {
+        en: { ...TEXTS.en, ...parsed.en },
+        ar: { ...TEXTS.ar, ...parsed.ar },
+      };
+    }
+  } catch (e) {
+    console.error("Could not parse stored texts", e);
+    localStorage.removeItem(STORED_TEXTS_KEY);
+  }
+  return TEXTS;
+};
+
 
 const getInitialThemeMode = (): ThemeMode => {
   if (typeof window !== 'undefined') {
@@ -33,46 +57,52 @@ const getInitialLanguage = (): LanguageOption => {
     if (storedLang === LanguageOption.English || storedLang === LanguageOption.Arabic) {
       return storedLang;
     }
-    // Check browser preference if no language is stored
     if (navigator.language.startsWith('ar')) {
       return LanguageOption.Arabic;
     }
   }
-  return LanguageOption.English; // Default to English
+  return LanguageOption.English;
 };
 
-const getInitialCustomImages = (): CustomImages => {
-  if (typeof window !== 'undefined') {
-    const storedImages = localStorage.getItem('customImages');
-    if (storedImages) {
-      try {
-        return JSON.parse(storedImages);
-      } catch (e) {
-        console.error("Failed to parse custom images from localStorage", e);
-        return {};
-      }
-    }
-  }
-  return {};
-}
 
-
-const App: React.FC = () => {
+const AppContent: React.FC = () => {
   const layout = LayoutOption.ModernSleek;
   const colorScheme = ColorSchemeOption.BlackGold;
   const typography = TypographyOption.LuxeModern;
 
   const [language, setLanguage] = useState<LanguageOption>(getInitialLanguage);
   const [themeMode, setThemeMode] = useState<ThemeMode>(getInitialThemeMode);
-  const [isEditMode, setIsEditMode] = useState(false);
-  const [customImages, setCustomImages] = useState<CustomImages>(getInitialCustomImages);
-  const [editingImageKey, setEditingImageKey] = useState<string | null>(null);
+  const [texts, setTexts] = useState(getInitialTexts);
   const headerRef = useRef<HTMLElement>(null);
 
-  useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    setIsEditMode(params.get('edit') === 'true');
-  }, []);
+  const updateText = useCallback((key: string, value: string) => {
+      setTexts(currentTexts => {
+          const newTextsForLang = {
+              ...currentTexts[language],
+              [key]: value
+          };
+          const newTexts = {
+              ...currentTexts,
+              [language]: newTextsForLang
+          };
+          
+          try {
+            const stored = JSON.parse(localStorage.getItem(STORED_TEXTS_KEY) || '{}');
+            const updatedStored = {
+                ...stored,
+                [language]: {
+                    ...stored[language],
+                    [key]: value
+                }
+            };
+            localStorage.setItem(STORED_TEXTS_KEY, JSON.stringify(updatedStored));
+          } catch(e) {
+            console.error("Could not update stored texts", e);
+          }
+
+          return newTexts;
+      });
+  }, [language]);
 
   useLayoutEffect(() => {
     const headerElement = headerRef.current;
@@ -123,8 +153,8 @@ const App: React.FC = () => {
   }, [language]);
   
   const t = useCallback((key: string): string => {
-    return TEXTS[language][key] || TEXTS[LanguageOption.English][key] || key;
-  }, [language]);
+    return texts[language]?.[key] || TEXTS[LanguageOption.English][key] || key;
+  }, [language, texts]);
   
   const getFontClasses = () => {
     if (language === 'ar') return 'font-arabic';
@@ -136,34 +166,6 @@ const App: React.FC = () => {
     }
   };
 
-  const handleUpdateImage = (key: string, dataUrl: string) => {
-    const newImages = { ...customImages, [key]: dataUrl };
-    setCustomImages(newImages);
-    localStorage.setItem('customImages', JSON.stringify(newImages));
-  };
-  
-  const handleResetImage = (key: string) => {
-    const newImages = { ...customImages };
-    delete newImages[key];
-    setCustomImages(newImages);
-    localStorage.setItem('customImages', JSON.stringify(newImages));
-  };
-
-  const findDefaultImage = (key: string | null): string | undefined => {
-    if (!key) return undefined;
-    if (key === 'heroBg') {
-        return 'https://picsum.photos/seed/sleek/1920/1080';
-    }
-    if (key.startsWith('product-')) {
-        const productId = parseInt(key.split('-')[1]);
-        return PRODUCTS.find(p => p.id === productId)?.imageUrl;
-    }
-    return undefined;
-  }
-
-  const currentEditingImage = findDefaultImage(editingImageKey);
-  const currentCustomImage = editingImageKey ? customImages[editingImageKey] : undefined;
-
   return (
     <div className={`${getFontClasses()} bg-[var(--color-background)] text-[var(--color-text-primary)] transition-colors duration-500`}>
       <AnimatePresence mode="wait">
@@ -174,45 +176,42 @@ const App: React.FC = () => {
           exit={{ opacity: 0 }}
           transition={{ duration: 0.5 }}
         >
-          {isEditMode && <EditModeBanner />}
-          <Header ref={headerRef} layout={layout} language={language} setLanguage={setLanguage} t={t} />
+          <Header ref={headerRef} layout={layout} language={language} setLanguage={setLanguage} t={t} onUpdateText={updateText} />
           <main>
             <Hero
               layout={layout}
               t={t}
-              isEditMode={isEditMode}
-              customImage={customImages['heroBg']}
-              onEdit={() => setEditingImageKey('heroBg')}
+              onUpdateText={updateText}
             />
             <ProductSection
               layout={layout}
               t={t}
-              isEditMode={isEditMode}
-              customImages={customImages}
-              onEdit={(key) => setEditingImageKey(key)}
+              onUpdateText={updateText}
             />
-            <VisitUsSection t={t} />
+            <VisitUsSection t={t} onUpdateText={updateText}/>
           </main>
-          <Footer layout={layout} t={t} />
+          <Footer layout={layout} t={t} onUpdateText={updateText} />
         </motion.div>
       </AnimatePresence>
       <ThemeToggle themeMode={themeMode} setThemeMode={setThemeMode} />
-      <ImageEditModal
-        isOpen={!!editingImageKey}
-        onClose={() => setEditingImageKey(null)}
-        onSave={(dataUrl) => {
-            if (editingImageKey) handleUpdateImage(editingImageKey, dataUrl);
-            setEditingImageKey(null);
-        }}
-        onReset={() => {
-            if (editingImageKey) handleResetImage(editingImageKey);
-            setEditingImageKey(null);
-        }}
-        currentImage={currentCustomImage || currentEditingImage}
-        defaultImage={currentEditingImage}
-      />
     </div>
   );
 };
+
+const App: React.FC = () => {
+  const { user, isEditMode } = useAuth();
+  
+  if (isEditMode && !user) {
+      return <LoginPage />;
+  }
+  
+  return (
+      <>
+          {isEditMode && <EditModeBanner />}
+          <AppContent />
+      </>
+  );
+};
+
 
 export default App;

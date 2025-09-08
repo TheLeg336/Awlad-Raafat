@@ -3,18 +3,16 @@ import { motion, Variants, useScroll, useTransform } from 'framer-motion';
 import { LayoutOption } from '../types';
 import { getTextContent } from '../constants';
 import type { TFunction } from '../App';
-import EditIcon from './icons/EditIcon';
+import EditableText from './EditableText';
 
 
 interface HeroProps {
   layout: LayoutOption;
   t: TFunction;
-  isEditMode: boolean;
-  customImage: string | undefined;
-  onEdit: () => void;
+  onUpdateText: (key: string, value: string) => void;
 }
 
-const Hero: React.FC<HeroProps> = ({ layout, t, isEditMode, customImage, onEdit }) => {
+const Hero: React.FC<HeroProps> = ({ layout, t, onUpdateText }) => {
   const content = getTextContent(t);
   const ref = useRef(null);
   const { scrollYProgress } = useScroll({
@@ -26,7 +24,7 @@ const Hero: React.FC<HeroProps> = ({ layout, t, isEditMode, customImage, onEdit 
   const defaultBgImage = 'https://picsum.photos/seed/sleek/1920/1080';
 
   const currentConfig = {
-      bgImage: customImage || defaultBgImage,
+      bgImage: defaultBgImage,
       contentClass: 'w-full text-[var(--color-text-primary)]',
       titleClass: 'text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold tracking-tight mb-4',
       subtitleClass: 'text-base sm:text-lg md:text-xl max-w-3xl mx-auto text-[var(--color-text-secondary)]',
@@ -65,17 +63,6 @@ const Hero: React.FC<HeroProps> = ({ layout, t, isEditMode, customImage, onEdit 
       />
       <div className="absolute inset-0 z-[1] bg-black/20" /> {/* Optional overlay for text readability */}
       
-      {isEditMode && (
-          <button
-              onClick={onEdit}
-              className="absolute top-5 right-5 z-10 bg-white/90 backdrop-blur-sm text-gray-800 px-4 py-2 rounded-lg text-sm font-semibold hover:bg-white transition-all duration-300 shadow-lg flex items-center gap-2"
-              aria-label="Edit hero background image"
-          >
-              <EditIcon />
-              Edit Background
-          </button>
-      )}
-
       <div className="relative z-[2] h-full container mx-auto px-6 flex flex-col items-center justify-center text-center">
         <motion.div
           className={currentConfig.contentClass}
@@ -83,7 +70,9 @@ const Hero: React.FC<HeroProps> = ({ layout, t, isEditMode, customImage, onEdit 
           initial="hidden"
           animate="visible"
         >
-          <motion.h1 variants={itemVariants} className={currentConfig.titleClass}>{currentConfig.content.title}</motion.h1>
+          <EditableText textKey='hero_sleek_title' onUpdate={onUpdateText}>
+            <motion.h1 variants={itemVariants} className={currentConfig.titleClass}>{currentConfig.content.title}</motion.h1>
+          </EditableText>
           <motion.button 
             variants={itemVariants} 
             className={currentConfig.ctaClass}
@@ -91,7 +80,9 @@ const Hero: React.FC<HeroProps> = ({ layout, t, isEditMode, customImage, onEdit 
             whileTap={{ scale: 0.98 }}
             transition={{ type: "spring", stiffness: 400, damping: 17 }}
           >
-            {currentConfig.content.cta}
+            <EditableText textKey='hero_cta_learn_more' onUpdate={onUpdateText}>
+                <span>{currentConfig.content.cta}</span>
+            </EditableText>
           </motion.button>
         </motion.div>
       </div>
