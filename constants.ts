@@ -1,5 +1,7 @@
 import { LayoutOption, ColorSchemeOption, TypographyOption, ColorScheme, Product, type TFunction } from './types';
 
+export const HERO_IMAGE_URL = 'https://picsum.photos/seed/sleek/1920/1080';
+
 export const COLOR_SCHEMES: Record<ColorSchemeOption, ColorScheme> = {
   [ColorSchemeOption.BlackGold]: {
     light: {

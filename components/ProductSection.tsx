@@ -11,13 +11,13 @@ interface ProductSectionProps {
 }
 
 const ProductCardSleek: React.FC<{ product: Product; t: TFunction; }> = ({ product, t }) => (
-    <div className="relative group text-center">
+    <article className="relative group text-center">
         <div className="bg-[var(--color-secondary)] rounded-lg overflow-hidden mb-4 transition-shadow duration-300 hover:shadow-xl">
             <img src={product.imageUrl} alt={t(product.nameKey)} className="w-full h-72 sm:h-80 object-cover" />
         </div>
         <h3 className="text-xl font-semibold text-[var(--color-text-primary)]">{t(product.nameKey)}</h3>
         <p className="text-md text-[var(--color-text-secondary)]">{t(product.categoryKey)}</p>
-    </div>
+    </article>
 );
 
 const ProductSection: React.FC<ProductSectionProps> = ({ layout, t }) => {
@@ -53,7 +53,7 @@ const ProductSection: React.FC<ProductSectionProps> = ({ layout, t }) => {
                     >
                         {PRODUCTS.slice(0, 6).map((p) => {
                             return (
-                                <motion.div 
+                                <motion.article 
                                     key={p.id} 
                                     variants={itemVariants} 
                                     whileHover={{ scale: 1.03, y: -8 }}
@@ -63,7 +63,7 @@ const ProductSection: React.FC<ProductSectionProps> = ({ layout, t }) => {
                                       product={p} 
                                       t={t}
                                     />
-                                </motion.div>
+                                </motion.article>
                             )
                         })}
                     </motion.div>
