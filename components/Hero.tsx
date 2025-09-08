@@ -81,6 +81,17 @@ const Hero: React.FC<HeroProps> = ({ layout, t }) => {
         ref={heroRef}
         className="relative text-[var(--color-text-primary)] transition-all duration-500 h-[50vh] md:h-screen overflow-hidden"
       >
+        {/* 
+          Pre-render element: This hidden div includes the classes for the active search bar.
+          It forces the browser to compute these styles (especially the expensive backdrop-blur and gradient)
+          on page load, preventing animation jank on the first click.
+        */}
+        <div
+          className="search-gloss backdrop-blur-lg shadow-lg"
+          style={{ position: 'absolute', opacity: 0, pointerEvents: 'none', zIndex: -1 }}
+          aria-hidden="true"
+        />
+
         <motion.div
           className="absolute inset-0 z-0 bg-cover bg-center"
           style={{
@@ -113,7 +124,7 @@ const Hero: React.FC<HeroProps> = ({ layout, t }) => {
                   relative flex items-center justify-center origin-center
                   ${isSearchVisible 
                     ? 'w-full max-w-lg h-14 search-gloss backdrop-blur-lg shadow-lg' 
-                    : 'h-12 px-8 bg-[var(--color-primary)] text-white hover:bg-opacity-80 shine-effect cursor-pointer'}
+                    : 'h-14 px-8 bg-[var(--color-primary)] text-white hover:bg-opacity-80 shine-effect cursor-pointer'}
                 `}
                 style={{ borderRadius: 999 }}
                 transition={{ type: "spring", stiffness: 180, damping: 26, mass: 0.9 }}
