@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useCallback, useRef, useLayoutEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { LayoutOption, ColorSchemeOption, LanguageOption, TypographyOption, User } from './types';
+import { LayoutOption, ColorSchemeOption, LanguageOption, TypographyOption, type TFunction } from './types';
 import { COLOR_SCHEMES, TEXTS } from './constants';
 import Header from './components/Header';
 import Hero from './components/Hero';
@@ -8,35 +7,8 @@ import ProductSection from './components/ProductSection';
 import VisitUsSection from './components/VisitUsSection';
 import Footer from './components/Footer';
 import ThemeToggle from './components/ThemeToggle';
-import { useAuth } from './AuthContext';
-import LoginPage from './components/LoginPage';
-import EditModeBanner from './components/EditModeBanner';
-import EditableText from './components/EditableText';
 
-export type TFunction = (key: string) => string;
 type ThemeMode = 'light' | 'dark';
-type UpdateTextFunction = (key: string, value: string) => void;
-
-const STORED_TEXTS_KEY = 'awlad-raafat-texts';
-
-const getInitialTexts = (): Record<string, Record<string, string>> => {
-  try {
-    const stored = localStorage.getItem(STORED_TEXTS_KEY);
-    if (stored) {
-      const parsed = JSON.parse(stored);
-      // A simple merge, stored values override defaults
-      return {
-        en: { ...TEXTS.en, ...parsed.en },
-        ar: { ...TEXTS.ar, ...parsed.ar },
-      };
-    }
-  } catch (e) {
-    console.error("Could not parse stored texts", e);
-    localStorage.removeItem(STORED_TEXTS_KEY);
-  }
-  return TEXTS;
-};
-
 
 const getInitialThemeMode = (): ThemeMode => {
   if (typeof window !== 'undefined') {
@@ -64,45 +36,17 @@ const getInitialLanguage = (): LanguageOption => {
   return LanguageOption.English;
 };
 
-
-const AppContent: React.FC = () => {
+const App: React.FC = () => {
   const layout = LayoutOption.ModernSleek;
   const colorScheme = ColorSchemeOption.BlackGold;
   const typography = TypographyOption.LuxeModern;
 
   const [language, setLanguage] = useState<LanguageOption>(getInitialLanguage);
   const [themeMode, setThemeMode] = useState<ThemeMode>(getInitialThemeMode);
-  const [texts, setTexts] = useState(getInitialTexts);
+  const [isShineAnimating, setIsShineAnimating] = useState(true);
   const headerRef = useRef<HTMLElement>(null);
 
-  const updateText = useCallback((key: string, value: string) => {
-      setTexts(currentTexts => {
-          const newTextsForLang = {
-              ...currentTexts[language],
-              [key]: value
-          };
-          const newTexts = {
-              ...currentTexts,
-              [language]: newTextsForLang
-          };
-          
-          try {
-            const stored = JSON.parse(localStorage.getItem(STORED_TEXTS_KEY) || '{}');
-            const updatedStored = {
-                ...stored,
-                [language]: {
-                    ...stored[language],
-                    [key]: value
-                }
-            };
-            localStorage.setItem(STORED_TEXTS_KEY, JSON.stringify(updatedStored));
-          } catch(e) {
-            console.error("Could not update stored texts", e);
-          }
-
-          return newTexts;
-      });
-  }, [language]);
+  const texts = TEXTS;
 
   useLayoutEffect(() => {
     const headerElement = headerRef.current;
@@ -150,9 +94,18 @@ const AppContent: React.FC = () => {
     localStorage.setItem('language', language);
     document.documentElement.lang = language;
     document.documentElement.dir = language === LanguageOption.Arabic ? 'rtl' : 'ltr';
+
+    // This effect re-triggers the header's shine animation when the language changes.
+    // It quickly toggles the state, forcing React to re-render and the CSS animation to restart.
+    // The timeout ensures the DOM has updated before the animation class is re-applied.
+    setIsShineAnimating(false);
+    const timer = setTimeout(() => {
+        setIsShineAnimating(true);
+    }, 10);
+    return () => clearTimeout(timer);
   }, [language]);
   
-  const t = useCallback((key: string): string => {
+  const t: TFunction = useCallback((key: string): string => {
     return texts[language]?.[key] || TEXTS[LanguageOption.English][key] || key;
   }, [language, texts]);
   
@@ -168,50 +121,22 @@ const AppContent: React.FC = () => {
 
   return (
     <div className={`${getFontClasses()} bg-[var(--color-background)] text-[var(--color-text-primary)] transition-colors duration-500`}>
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={`${layout}-${language}`}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.5 }}
-        >
-          <Header ref={headerRef} layout={layout} language={language} setLanguage={setLanguage} t={t} onUpdateText={updateText} />
-          <main>
-            <Hero
-              layout={layout}
-              t={t}
-              onUpdateText={updateText}
-            />
-            <ProductSection
-              layout={layout}
-              t={t}
-              onUpdateText={updateText}
-            />
-            <VisitUsSection t={t} onUpdateText={updateText}/>
-          </main>
-          <Footer layout={layout} t={t} onUpdateText={updateText} />
-        </motion.div>
-      </AnimatePresence>
+      <Header ref={headerRef} layout={layout} language={language} setLanguage={setLanguage} t={t} isShineAnimating={isShineAnimating} />
+      <main>
+        <Hero
+          layout={layout}
+          t={t}
+        />
+        <ProductSection
+          layout={layout}
+          t={t}
+        />
+        <VisitUsSection t={t} />
+      </main>
+      <Footer layout={layout} t={t} />
       <ThemeToggle themeMode={themeMode} setThemeMode={setThemeMode} />
     </div>
   );
 };
-
-const App: React.FC = () => {
-  const { user, isEditMode } = useAuth();
-  
-  if (isEditMode && !user) {
-      return <LoginPage />;
-  }
-  
-  return (
-      <>
-          {isEditMode && <EditModeBanner />}
-          <AppContent />
-      </>
-  );
-};
-
 
 export default App;

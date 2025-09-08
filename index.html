@@ -8,7 +8,6 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&family=Cormorant+Garamond:wght@400;700&family=Inter:wght@400;700&display=swap" rel="stylesheet">
-    <script src="https://accounts.google.com/gsi/client" async></script>
     <style>
       .font-body-luxe { font-family: 'Inter', sans-serif; }
       .font-heading-luxe h1, .font-heading-luxe h2, .font-heading-luxe h3, .font-heading-luxe h4, .font-heading-luxe h5, .font-heading-luxe h6, .font-heading-luxe .font-heading { font-family: 'Cormorant Garamond', serif; }
@@ -19,11 +18,18 @@
         font-family: 'Cairo', sans-serif; 
       }
       
-      /* Shine Effect for Button */
+      /* Refined Shine Effect */
+      @keyframes subtle-shine-anim {
+        to {
+          transform: translateX(100%);
+        }
+      }
+      
       .shine-effect {
         position: relative;
         overflow: hidden;
       }
+      
       .shine-effect::after {
         content: '';
         position: absolute;
@@ -32,59 +38,44 @@
         width: 200%;
         height: 200%;
         background: linear-gradient(
-          to bottom right,
+          125deg,
           rgba(255, 255, 255, 0) 40%,
-          rgba(255, 255, 255, 0.2) 50%,
+          rgba(255, 255, 255, 0.15) 50%,
           rgba(255, 255, 255, 0) 60%
         );
         transform: translateX(-100%);
-        transition: transform 1s ease;
       }
-      .shine-effect:hover::after {
-        transform: translateX(100%);
+      
+      .shine-onload::after {
+        animation: subtle-shine-anim 2s ease-in-out 0.3s;
       }
 
-      /* New Shine Effect for Logo */
-      @keyframes logo-shine-anim {
-        to {
+      .shine-effect:hover::after,
+      .shine-effect:active::after {
+        animation: subtle-shine-anim 0.9s ease-out;
+      }
+
+      /* RTL Shine Effect Overrides */
+      @keyframes subtle-shine-anim-rtl {
+          to {
+              transform: translateX(-100%);
+          }
+      }
+
+      html[dir="rtl"] .shine-effect::after {
           transform: translateX(100%);
-        }
+          background: linear-gradient(
+              55deg, /* Opposite angle for RTL (180 - 125) */
+              rgba(255, 255, 255, 0) 40%,
+              rgba(255, 255, 255, 0.15) 50%,
+              rgba(255, 255, 255, 0) 60%
+          );
       }
       
-      .logo-shine {
-        position: relative;
-        overflow: hidden;
-        display: inline-block;
-      }
-      
-      .logo-shine::after {
-        content: '';
-        position: absolute;
-        top: -50%;
-        left: -50%;
-        width: 200%;
-        height: 200%;
-        background: linear-gradient(
-          to bottom right,
-          rgba(255, 255, 255, 0) 40%,
-          rgba(255, 255, 255, 0.4) 50%,
-          rgba(255, 255, 255, 0) 60%
-        );
-        transform: translateX(-100%);
-      }
-      
-      .logo-shine-onload::after {
-        animation: logo-shine-anim 1.5s ease-out 0.5s;
-      }
-
-      .button-shine-onload::after {
-        animation: logo-shine-anim 1.5s ease-out 0.8s;
-      }
-      
-      .logo-shine:hover::after,
-      .logo-shine:active::after {
-        transform: translateX(-100%);
-        animation: logo-shine-anim 1s ease;
+      html[dir="rtl"] .shine-onload::after,
+      html[dir="rtl"] .shine-effect:hover::after,
+      html[dir="rtl"] .shine-effect:active::after {
+          animation-name: subtle-shine-anim-rtl;
       }
 
       /* Nav Link Underline Effect */
@@ -113,10 +104,10 @@
   "imports": {
     "react": "https://aistudiocdn.com/react@^19.1.1",
     "react-dom/": "https://aistudiocdn.com/react-dom@^19.1.1/",
-    "react/": "https://aistudiocdn.com/react@^19.1.1/",
     "framer-motion": "https://aistudiocdn.com/framer-motion@^12.23.12",
-    "vite": "https://aistudiocdn.com/vite@^7.1.4",
-    "@vitejs/plugin-react": "https://aistudiocdn.com/@vitejs/plugin-react@^5.0.2"
+    "react/": "https://aistudiocdn.com/react@^19.1.1/",
+    "@vitejs/plugin-react": "https://aistudiocdn.com/@vitejs/plugin-react@^5.0.2",
+    "vite": "https://aistudiocdn.com/vite@^7.1.5"
   }
 }
 </script>

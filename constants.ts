@@ -1,12 +1,4 @@
-
-
-
-import { LayoutOption, ColorSchemeOption, TypographyOption, ColorScheme, Product } from './types';
-import type { TFunction } from './App';
-
-export const WHITELISTED_EDITORS = [
-  'admin@awladraafat.com', // Replace with your whitelisted administrator emails
-];
+import { LayoutOption, ColorSchemeOption, TypographyOption, ColorScheme, Product, type TFunction } from './types';
 
 export const COLOR_SCHEMES: Record<ColorSchemeOption, ColorScheme> = {
   [ColorSchemeOption.BlackGold]: {
@@ -50,20 +42,6 @@ export const PRODUCTS: Product[] = [
   { id: 5, nameKey: 'product_bed_name', categoryKey: 'product_bed_category', imageUrl: 'https://picsum.photos/seed/bed/800/600' },
   { id: 6, nameKey: 'product_cabinet_name', categoryKey: 'product_cabinet_category', imageUrl: 'https://picsum.photos/seed/cabinet/800/600' },
 ];
-
-export const getTextContent = (t: TFunction) => ({
-  hero: {
-    'modern-sleek': {
-      title: t('hero_sleek_title'),
-      cta: t('hero_cta_learn_more')
-    }
-  },
-  products: {
-    title: t('products_title'),
-    subtitle: t('products_subtitle'),
-  },
-});
-
 
 export const TEXTS: Record<string, Record<string, string>> = {
   en: {

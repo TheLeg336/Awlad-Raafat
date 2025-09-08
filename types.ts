@@ -38,8 +38,4 @@ export interface Product {
   imageUrl: string;
 }
 
-export interface User {
-  name: string;
-  email: string;
-  picture: string;
-}
+export type TFunction = (key: string) => string;

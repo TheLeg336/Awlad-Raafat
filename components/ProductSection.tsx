@@ -2,39 +2,33 @@ import React from 'react';
 import { motion, Variants } from 'framer-motion';
 import { LayoutOption, Product } from '../types';
 import { PRODUCTS } from '../constants';
-import type { TFunction } from '../App';
+import type { TFunction } from '../types';
 import ProductSectionHeader from './ProductSectionHeader';
-import EditableText from './EditableText';
 
 interface ProductSectionProps {
   layout: LayoutOption;
   t: TFunction;
-  onUpdateText: (key: string, value: string) => void;
 }
 
-const ProductCardSleek: React.FC<{ product: Product; t: TFunction; onUpdateText: (key: string, value: string) => void; }> = ({ product, t, onUpdateText }) => (
+const ProductCardSleek: React.FC<{ product: Product; t: TFunction; }> = ({ product, t }) => (
     <div className="relative group text-center">
         <div className="bg-[var(--color-secondary)] rounded-lg overflow-hidden mb-4 transition-shadow duration-300 hover:shadow-xl">
             <img src={product.imageUrl} alt={t(product.nameKey)} className="w-full h-72 sm:h-80 object-cover" />
         </div>
-        <EditableText textKey={product.nameKey} onUpdate={onUpdateText}>
-            <h3 className="text-xl font-semibold text-[var(--color-text-primary)]">{t(product.nameKey)}</h3>
-        </EditableText>
-        <EditableText textKey={product.categoryKey} onUpdate={onUpdateText}>
-            <p className="text-md text-[var(--color-text-secondary)]">{t(product.categoryKey)}</p>
-        </EditableText>
+        <h3 className="text-xl font-semibold text-[var(--color-text-primary)]">{t(product.nameKey)}</h3>
+        <p className="text-md text-[var(--color-text-secondary)]">{t(product.categoryKey)}</p>
     </div>
 );
 
-const ProductSection: React.FC<ProductSectionProps> = ({ layout, t, onUpdateText }) => {
+const ProductSection: React.FC<ProductSectionProps> = ({ layout, t }) => {
     const gridVariants: Variants = {
         hidden: {},
-        visible: { transition: { staggerChildren: 0.2 } }
+        visible: { transition: { staggerChildren: 0.15 } }
     };
     
     const itemVariants: Variants = {
-        hidden: { opacity: 0, scale: 0.9, y: 20 },
-        visible: { opacity: 1, scale: 1, y: 0, transition: { duration: 0.5, ease: [0.25, 1, 0.5, 1] } }
+        hidden: { opacity: 0, y: 30 },
+        visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.25, 1, 0.5, 1] } }
     };
     
     const STICKY_HEADER_OFFSET = 'top-[var(--header-height)]';
@@ -45,7 +39,7 @@ const ProductSection: React.FC<ProductSectionProps> = ({ layout, t, onUpdateText
                 
                 <div className={`sticky ${STICKY_HEADER_OFFSET} z-10 bg-[var(--color-background)]/80 backdrop-blur-xl shadow-sm`}>
                     <div className="container mx-auto px-6 pt-12 pb-6 md:pt-20 md:pb-10">
-                        <ProductSectionHeader t={t} onUpdateText={onUpdateText}/>
+                        <ProductSectionHeader t={t}/>
                     </div>
                 </div>
 
@@ -62,13 +56,12 @@ const ProductSection: React.FC<ProductSectionProps> = ({ layout, t, onUpdateText
                                 <motion.div 
                                     key={p.id} 
                                     variants={itemVariants} 
-                                    whileHover={{ scale: 1.05 }}
+                                    whileHover={{ scale: 1.03, y: -8 }}
                                     transition={{ type: "spring", stiffness: 300, damping: 20 }}
                                 >
                                     <ProductCardSleek 
                                       product={p} 
                                       t={t}
-                                      onUpdateText={onUpdateText}
                                     />
                                 </motion.div>
                             )

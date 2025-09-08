@@ -1,20 +1,15 @@
 import React from 'react';
 import { motion, Variants } from 'framer-motion';
-import { getTextContent } from '../constants';
-import type { TFunction } from '../App';
-import EditableText from './EditableText';
+import type { TFunction } from '../types';
 
 interface ProductSectionHeaderProps {
   t: TFunction;
-  onUpdateText: (key: string, value: string) => void;
 }
 
-const ProductSectionHeader: React.FC<ProductSectionHeaderProps> = ({ t, onUpdateText }) => {
-  const content = getTextContent(t);
-
+const ProductSectionHeader: React.FC<ProductSectionHeaderProps> = ({ t }) => {
   const headerVariants: Variants = {
     hidden: { opacity: 0, y: 30 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: 'easeOut' } }
+    visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.25, 1, 0.5, 1] } }
   };
 
   return (
@@ -23,14 +18,10 @@ const ProductSectionHeader: React.FC<ProductSectionHeaderProps> = ({ t, onUpdate
       variants={headerVariants}
       initial="hidden"
       whileInView="visible"
-      viewport={{ once: true }}
+      viewport={{ once: true, amount: 0.5 }}
     >
-      <EditableText textKey="products_title" onUpdate={onUpdateText}>
-        <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-[var(--color-text-primary)]">{content.products.title}</h2>
-      </EditableText>
-      <EditableText textKey="products_subtitle" onUpdate={onUpdateText}>
-        <p className="text-md sm:text-lg text-[var(--color-text-secondary)] mt-4 max-w-2xl mx-auto">{content.products.subtitle}</p>
-      </EditableText>
+      <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-[var(--color-text-primary)]">{t('products_title')}</h2>
+      <p className="text-md sm:text-lg text-[var(--color-text-secondary)] mt-4 max-w-2xl mx-auto">{t('products_subtitle')}</p>
     </motion.div>
   );
 };

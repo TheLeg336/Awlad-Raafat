@@ -1,18 +1,17 @@
 import React, { useState, useEffect, forwardRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { LayoutOption, LanguageOption } from '../types';
-import type { TFunction } from '../App';
-import EditableText from './EditableText';
+import type { TFunction } from '../types';
 
 interface HeaderProps {
   layout: LayoutOption;
   language: LanguageOption;
   setLanguage: (lang: LanguageOption) => void;
   t: TFunction;
-  onUpdateText: (key: string, value: string) => void;
+  isShineAnimating: boolean;
 }
 
-const Header = forwardRef<HTMLElement, HeaderProps>(({ layout, language, setLanguage, t, onUpdateText }, ref) => {
+const Header = forwardRef<HTMLElement, HeaderProps>(({ layout, language, setLanguage, t, isShineAnimating }, ref) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const isRtl = language === LanguageOption.Arabic;
 
@@ -92,12 +91,10 @@ const Header = forwardRef<HTMLElement, HeaderProps>(({ layout, language, setLang
 
   return (
     <>
-      <header ref={ref} className={`${headerClass} transition-colors duration-500`}>
+      <header ref={ref} className={`${headerClass} transition-colors duration-500 shine-effect ${isShineAnimating ? 'shine-onload' : ''}`}>
         <div className="container mx-auto px-6 py-4 flex justify-between items-center">
           <div className={`${logoClass} font-heading text-[var(--color-text-primary)]`}>
-             <EditableText textKey="logo" onUpdate={onUpdateText}>
-                <a href="#" className="logo-shine logo-shine-onload">{t('logo')}</a>
-             </EditableText>
+             <a href="#">{t('logo')}</a>
           </div>
 
           <nav className="hidden md:flex items-center">
@@ -131,7 +128,7 @@ const Header = forwardRef<HTMLElement, HeaderProps>(({ layout, language, setLang
               initial={{ x: isRtl ? '-100%' : '100%' }}
               animate={{ x: 0 }}
               exit={{ x: isRtl ? '-100%' : '100%' }}
-              transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+              transition={{ type: 'spring', stiffness: 250, damping: 30 }}
             >
               <div className="p-6 h-full flex flex-col">
                 <div className="flex justify-between items-center mb-10">
