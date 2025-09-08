@@ -2,7 +2,6 @@ import React, { useRef } from 'react';
 import { motion, Variants, useScroll, useTransform } from 'framer-motion';
 import { LayoutOption } from '../types';
 import type { TFunction } from '../types';
-import { HERO_IMAGE_URL } from '../constants';
 
 
 interface HeroProps {
@@ -18,7 +17,7 @@ const Hero: React.FC<HeroProps> = ({ layout, t }) => {
   });
   const backgroundY = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
 
-  const defaultBgImage = HERO_IMAGE_URL;
+  const defaultBgImage = 'https://picsum.photos/seed/sleek/1920/1080';
 
   const currentConfig = {
       bgImage: defaultBgImage,
@@ -46,7 +45,7 @@ const Hero: React.FC<HeroProps> = ({ layout, t }) => {
   };
 
   return (
-    <section
+    <div
       ref={ref}
       className="relative text-[var(--color-text-primary)] transition-all duration-500 h-[50vh] md:h-screen overflow-hidden"
     >
@@ -78,7 +77,7 @@ const Hero: React.FC<HeroProps> = ({ layout, t }) => {
           </motion.button>
         </motion.div>
       </div>
-    </section>
+    </div>
   );
 };
 

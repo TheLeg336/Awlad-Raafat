@@ -1,14 +1,12 @@
 import React, { useState, useEffect, useCallback, useRef, useLayoutEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
 import { LayoutOption, ColorSchemeOption, LanguageOption, TypographyOption, type TFunction } from './types';
-import { COLOR_SCHEMES, TEXTS, HERO_IMAGE_URL } from './constants';
+import { COLOR_SCHEMES, TEXTS } from './constants';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import ProductSection from './components/ProductSection';
 import VisitUsSection from './components/VisitUsSection';
 import Footer from './components/Footer';
 import ThemeToggle from './components/ThemeToggle';
-import Preloader from './components/Preloader';
 
 type ThemeMode = 'light' | 'dark';
 
@@ -46,7 +44,6 @@ const App: React.FC = () => {
   const [language, setLanguage] = useState<LanguageOption>(getInitialLanguage);
   const [themeMode, setThemeMode] = useState<ThemeMode>(getInitialThemeMode);
   const [isShineAnimating, setIsShineAnimating] = useState(true);
-  const [isAppReady, setIsAppReady] = useState(false);
   const headerRef = useRef<HTMLElement>(null);
 
   const texts = TEXTS;
@@ -63,21 +60,6 @@ const App: React.FC = () => {
 
     return () => observer.disconnect();
   }, []);
-
-  useEffect(() => {
-    const img = new Image();
-    img.src = HERO_IMAGE_URL;
-    const handleLoad = () => {
-      setTimeout(() => setIsAppReady(true), 300);
-    };
-    img.addEventListener('load', handleLoad);
-    img.addEventListener('error', handleLoad);
-    return () => {
-      img.removeEventListener('load', handleLoad);
-      img.removeEventListener('error', handleLoad);
-    };
-  }, []);
-
 
   useEffect(() => {
     localStorage.setItem('themeMode', themeMode);
@@ -113,6 +95,9 @@ const App: React.FC = () => {
     document.documentElement.lang = language;
     document.documentElement.dir = language === LanguageOption.Arabic ? 'rtl' : 'ltr';
 
+    // This effect re-triggers the header's shine animation when the language changes.
+    // It quickly toggles the state, forcing React to re-render and the CSS animation to restart.
+    // The timeout ensures the DOM has updated before the animation class is re-applied.
     setIsShineAnimating(false);
     const timer = setTimeout(() => {
         setIsShineAnimating(true);
@@ -136,32 +121,20 @@ const App: React.FC = () => {
 
   return (
     <div className={`${getFontClasses()} bg-[var(--color-background)] text-[var(--color-text-primary)] transition-colors duration-500`}>
-      <AnimatePresence>
-        {!isAppReady && <Preloader t={t} />}
-      </AnimatePresence>
-
-      {isAppReady && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-        >
-          <Header ref={headerRef} layout={layout} language={language} setLanguage={setLanguage} t={t} isShineAnimating={isShineAnimating} />
-          <main>
-            <Hero
-              layout={layout}
-              t={t}
-            />
-            <ProductSection
-              layout={layout}
-              t={t}
-            />
-            <VisitUsSection t={t} />
-          </main>
-          <Footer layout={layout} t={t} />
-          <ThemeToggle themeMode={themeMode} setThemeMode={setThemeMode} />
-        </motion.div>
-      )}
+      <Header ref={headerRef} layout={layout} language={language} setLanguage={setLanguage} t={t} isShineAnimating={isShineAnimating} />
+      <main>
+        <Hero
+          layout={layout}
+          t={t}
+        />
+        <ProductSection
+          layout={layout}
+          t={t}
+        />
+        <VisitUsSection t={t} />
+      </main>
+      <Footer layout={layout} t={t} />
+      <ThemeToggle themeMode={themeMode} setThemeMode={setThemeMode} />
     </div>
   );
 };
