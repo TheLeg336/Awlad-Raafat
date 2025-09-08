@@ -38,41 +38,56 @@ const Footer: React.FC<FooterProps> = ({ layout, t }) => {
                     variants={titleVariants}
                     className="text-3xl sm:text-4xl text-center font-bold mb-12"
                 >
-                    <span>{t('footer_locations_title')}</span>
+                    {t('footer_locations_title')}
                 </motion.h2>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 text-center sm:text-left">
                     <motion.div variants={itemVariants}>
                         <h3 className="text-xl font-bold text-[var(--color-primary)] mb-3">
-                            <span>{t('footer_cairo_branch_title')}</span>
+                            {t('footer_cairo_branch_title')}
                         </h3>
-                        <p className="opacity-80 leading-relaxed">{t('footer_cairo_branch_address')}</p>
-                        <p className="opacity-70 text-sm mt-2">{t('footer_hours')}</p>
+                        <p className="opacity-80 leading-relaxed">
+                            {t('footer_cairo_branch_address')}
+                        </p>
+                        <p className="opacity-70 text-sm mt-2">
+                            {t('footer_hours')}
+                        </p>
                     </motion.div>
 
                     <motion.div variants={itemVariants}>
                         <h3 className="text-xl font-bold text-[var(--color-primary)] mb-3">
-                           <span>{t('footer_minya_branch_title')}</span>
+                           {t('footer_minya_branch_title')}
                         </h3>
-                        <p className="opacity-80 leading-relaxed">{t('footer_minya_branch_address')}</p>
-                        <p className="opacity-70 text-sm mt-2">{t('footer_hours')}</p>
+                        <p className="opacity-80 leading-relaxed">
+                             {t('footer_minya_branch_address')}
+                        </p>
+                        <p className="opacity-70 text-sm mt-2">
+                            {t('footer_hours')}
+                        </p>
                     </motion.div>
                     
                     <motion.div variants={itemVariants}>
                         <h3 className="text-xl font-bold text-[var(--color-primary)] mb-3">
-                            <span>{t('footer_new_minya_branch_title')}</span>
+                             {t('footer_new_minya_branch_title')}
                         </h3>
-                        <p className="opacity-80 leading-relaxed">{t('footer_new_minya_branch_address')}</p>
-                        <p className="opacity-70 text-sm mt-2">{t('footer_hours')}</p>
+                        <p className="opacity-80 leading-relaxed">
+                             {t('footer_new_minya_branch_address')}
+                        </p>
+                        <p className="opacity-70 text-sm mt-2">
+                             {t('footer_hours')}
+                        </p>
                     </motion.div>
 
                     <motion.div variants={itemVariants}>
                         <h3 className="text-xl font-bold text-[var(--color-primary)] mb-3">
-                            <span>{t('footer_phone_title')}</span>
+                            {t('footer_phone_title')}
                         </h3>
                         <p className="opacity-80 leading-relaxed">
-                          {t('footer_phone_label')}{' '}
-                          <span className="inline-block" dir="ltr">{t('footer_phone_number')}</span>
+                          {t('footer_phone_label')}
+                          {' '}
+                          <span className="inline-block" dir="ltr">
+                             {t('footer_phone_number')}
+                          </span>
                         </p>
                     </motion.div>
                 </div>
@@ -81,7 +96,9 @@ const Footer: React.FC<FooterProps> = ({ layout, t }) => {
                     variants={itemVariants} 
                     className="text-center text-sm text-[var(--color-text-secondary)] mt-16 pt-8 border-t border-[var(--color-secondary)]/30"
                 >
-                    <p>{t('footer_copyright')}</p>
+                    <p>
+                        {t('footer_copyright')}
+                    </p>
                 </motion.div>
             </motion.div>
         </footer>

@@ -98,6 +98,14 @@
       .nav-link:hover::after {
           transform: scaleX(1);
       }
+
+      .search-gloss {
+        background: linear-gradient(135deg,
+            hsla(var(--color-primary-hsl-values), 0.15) 0%,
+            hsla(var(--color-primary-hsl-values), 0.05) 50%,
+            hsla(var(--color-primary-hsl-values), 0.15) 100%
+        );
+      }
     </style>
 <script type="importmap">
 {
@@ -108,7 +116,8 @@
     "react/": "https://aistudiocdn.com/react@^19.1.1/",
     "@vitejs/plugin-react": "https://aistudiocdn.com/@vitejs/plugin-react@^5.0.2",
     "vite": "https://aistudiocdn.com/vite@^7.1.5",
-    "path": "https://aistudiocdn.com/path@^0.12.7"
+    "path": "https://aistudiocdn.com/path@^0.12.7",
+    "url": "https://aistudiocdn.com/url@^0.11.4"
   }
 }
 </script>

@@ -4,6 +4,7 @@ export const COLOR_SCHEMES: Record<ColorSchemeOption, ColorScheme> = {
   [ColorSchemeOption.BlackGold]: {
     light: {
         primary: '#E8C547',
+        primaryHsl: '47, 81%, 60%',
         secondary: '#14213D',
         background: '#FFFFFF',
         textPrimary: '#1A202C',
@@ -12,6 +13,7 @@ export const COLOR_SCHEMES: Record<ColorSchemeOption, ColorScheme> = {
     },
     dark: {
       primary: '#F0B429',
+      primaryHsl: '42, 87%, 54%',
       secondary: '#14213D',
       background: '#1A202C',
       textPrimary: '#E5E5E5',
@@ -53,7 +55,7 @@ export const TEXTS: Record<string, Record<string, string>> = {
     lang_toggle_en: 'English',
     lang_toggle_ar: 'العربية',
     hero_sleek_title: 'The Future of Design',
-    hero_cta_learn_more: 'Learn More',
+    hero_cta_learn_more: 'Explore',
     products_title: 'Featured Collections',
     products_subtitle: 'Hand-selected pieces that define elegance and comfort.',
     visit_us_title: 'Visit Us',
@@ -82,6 +84,7 @@ export const TEXTS: Record<string, Record<string, string>> = {
     product_bed_category: 'Bedroom',
     product_cabinet_name: 'Alexandria Cabinet',
     product_cabinet_category: 'Storage',
+    search_placeholder: 'Search for furniture, styles, and more...',
   },
   ar: {
     logo: 'أولاد رأفت',
@@ -92,7 +95,7 @@ export const TEXTS: Record<string, Record<string, string>> = {
     lang_toggle_en: 'English',
     lang_toggle_ar: 'العربية',
     hero_sleek_title: 'مستقبل التصميم',
-    hero_cta_learn_more: 'اعرف المزيد',
+    hero_cta_learn_more: 'استكشف',
     products_title: 'مجموعاتنا المميزة',
     products_subtitle: 'قطعٌ فنية مختارة بعناية لتعيد تعريف الأناقة والراحة في مساحاتكم.',
     visit_us_title: 'زورونا',
@@ -121,5 +124,6 @@ export const TEXTS: Record<string, Record<string, string>> = {
     product_bed_category: 'غرفة النوم',
     product_cabinet_name: 'خزانة الإسكندرية',
     product_cabinet_category: 'تخزين',
+    search_placeholder: 'ابحث عن الأثاث والأنماط والمزيد...',
   }
 };

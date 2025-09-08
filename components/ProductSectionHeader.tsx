@@ -20,8 +20,12 @@ const ProductSectionHeader: React.FC<ProductSectionHeaderProps> = ({ t }) => {
       whileInView="visible"
       viewport={{ once: true, amount: 0.5 }}
     >
-      <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-[var(--color-text-primary)]">{t('products_title')}</h2>
-      <p className="text-md sm:text-lg text-[var(--color-text-secondary)] mt-4 max-w-2xl mx-auto">{t('products_subtitle')}</p>
+      <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-[var(--color-text-primary)]">
+        {t('products_title')}
+      </h2>
+      <p className="text-md sm:text-lg text-[var(--color-text-secondary)] mt-4 max-w-2xl mx-auto">
+        {t('products_subtitle')}
+      </p>
     </motion.div>
   );
 };

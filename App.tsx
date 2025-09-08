@@ -66,6 +66,7 @@ const App: React.FC = () => {
     const root = document.documentElement;
     const scheme = COLOR_SCHEMES[colorScheme][themeMode];
     root.style.setProperty('--color-primary', scheme.primary);
+    root.style.setProperty('--color-primary-hsl-values', scheme.primaryHsl);
     root.style.setProperty('--color-secondary', scheme.secondary);
     root.style.setProperty('--color-background', scheme.background);
     root.style.setProperty('--color-text-primary', scheme.textPrimary);
@@ -95,9 +96,6 @@ const App: React.FC = () => {
     document.documentElement.lang = language;
     document.documentElement.dir = language === LanguageOption.Arabic ? 'rtl' : 'ltr';
 
-    // This effect re-triggers the header's shine animation when the language changes.
-    // It quickly toggles the state, forcing React to re-render and the CSS animation to restart.
-    // The timeout ensures the DOM has updated before the animation class is re-applied.
     setIsShineAnimating(false);
     const timer = setTimeout(() => {
         setIsShineAnimating(true);
@@ -106,7 +104,8 @@ const App: React.FC = () => {
   }, [language]);
   
   const t: TFunction = useCallback((key: string): string => {
-    return texts[language]?.[key] || TEXTS[LanguageOption.English][key] || key;
+    const langTexts = texts[language] || TEXTS[LanguageOption.English];
+    return langTexts[key] || key;
   }, [language, texts]);
   
   const getFontClasses = () => {
@@ -121,7 +120,14 @@ const App: React.FC = () => {
 
   return (
     <div className={`${getFontClasses()} bg-[var(--color-background)] text-[var(--color-text-primary)] transition-colors duration-500`}>
-      <Header ref={headerRef} layout={layout} language={language} setLanguage={setLanguage} t={t} isShineAnimating={isShineAnimating} />
+      <Header 
+        ref={headerRef} 
+        layout={layout} 
+        language={language} 
+        setLanguage={setLanguage} 
+        t={t} 
+        isShineAnimating={isShineAnimating}
+      />
       <main>
         <Hero
           layout={layout}
@@ -131,9 +137,14 @@ const App: React.FC = () => {
           layout={layout}
           t={t}
         />
-        <VisitUsSection t={t} />
+        <VisitUsSection 
+          t={t}
+        />
       </main>
-      <Footer layout={layout} t={t} />
+      <Footer 
+        layout={layout} 
+        t={t}
+      />
       <ThemeToggle themeMode={themeMode} setThemeMode={setThemeMode} />
     </div>
   );

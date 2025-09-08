@@ -17,6 +17,7 @@ export enum LanguageOption {
 
 export interface ColorPalette {
   primary: string;
+  primaryHsl: string;
   secondary: string;
   background: string;
   textPrimary: string;

@@ -34,10 +34,10 @@ const VisitUsSection: React.FC<VisitUsSectionProps> = ({ t }) => {
         viewport={{ once: true, amount: 0.3 }}
       >
         <motion.h2 variants={itemVariants} className="text-3xl sm:text-4xl md:text-5xl font-bold text-[var(--color-text-primary)] mb-6">
-          <span>{t('visit_us_title')}</span>
+          {t('visit_us_title')}
         </motion.h2>
         <motion.p variants={itemVariants} className="text-md sm:text-lg text-[var(--color-text-secondary)] leading-relaxed">
-          <span>{t('visit_us_p1')}</span>
+          {t('visit_us_p1')}
         </motion.p>
       </motion.div>
     </section>

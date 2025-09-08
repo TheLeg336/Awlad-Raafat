@@ -63,7 +63,9 @@ const Header = forwardRef<HTMLElement, HeaderProps>(({ layout, language, setLang
       <ul className={`flex ${isMobile ? 'flex-col text-xl space-y-10 items-center' : `items-center ${navClass} space-x-8`}`}>
         {navLinks.map(link => (
           <li key={link.key}>
-            <a href={link.href} onClick={(e) => link.href.startsWith('#') ? handleSmoothScroll(e) : setIsMenuOpen(false)} className={`nav-link text-[var(--color-text-secondary)] hover:text-[var(--color-primary)] transition-colors duration-300 ${isMobile ? 'leading-loose' : ''}`}>{t(link.key)}</a>
+            <a href={link.href} onClick={(e) => link.href.startsWith('#') ? handleSmoothScroll(e) : setIsMenuOpen(false)} className={`nav-link text-[var(--color-text-secondary)] hover:text-[var(--color-primary)] transition-colors duration-300 ${isMobile ? 'leading-loose' : ''}`}>
+              {t(link.key)}
+            </a>
           </li>
         ))}
       </ul>
@@ -94,7 +96,9 @@ const Header = forwardRef<HTMLElement, HeaderProps>(({ layout, language, setLang
       <header ref={ref} className={`${headerClass} transition-colors duration-500 shine-effect ${isShineAnimating ? 'shine-onload' : ''}`}>
         <div className="container mx-auto px-6 py-4 flex justify-between items-center">
           <div className={`${logoClass} font-heading text-[var(--color-text-primary)]`}>
-             <a href="#">{t('logo')}</a>
+             <a href="#">
+                {t('logo')}
+             </a>
           </div>
 
           <nav className="hidden md:flex items-center">
@@ -133,7 +137,9 @@ const Header = forwardRef<HTMLElement, HeaderProps>(({ layout, language, setLang
               <div className="p-6 h-full flex flex-col">
                 <div className="flex justify-between items-center mb-10">
                   <div className={`${logoClass} font-heading text-[var(--color-text-primary)]`}>
-                    <a href="#" onClick={() => setIsMenuOpen(false)}>{t('logo')}</a>
+                    <a href="#" onClick={() => setIsMenuOpen(false)}>
+                        {t('logo')}
+                    </a>
                   </div>
                   <button onClick={() => setIsMenuOpen(false)} aria-label="Close menu" className="text-[var(--color-text-primary)]">
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
