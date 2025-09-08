@@ -1,13 +1,15 @@
 import React, { useState, useEffect, useCallback, useRef, useLayoutEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { LayoutOption, ColorSchemeOption, LanguageOption, TypographyOption } from './types';
-import { COLOR_SCHEMES, TEXTS } from './constants';
+import { LayoutOption, ColorSchemeOption, LanguageOption, TypographyOption, CustomImages } from './types';
+import { COLOR_SCHEMES, TEXTS, PRODUCTS } from './constants';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import ProductSection from './components/ProductSection';
 import VisitUsSection from './components/VisitUsSection';
 import Footer from './components/Footer';
 import ThemeToggle from './components/ThemeToggle';
+import EditModeBanner from './components/EditModeBanner';
+import ImageEditModal from './components/ImageEditModal';
 
 export type TFunction = (key: string) => string;
 type ThemeMode = 'light' | 'dark';
@@ -39,6 +41,21 @@ const getInitialLanguage = (): LanguageOption => {
   return LanguageOption.English; // Default to English
 };
 
+const getInitialCustomImages = (): CustomImages => {
+  if (typeof window !== 'undefined') {
+    const storedImages = localStorage.getItem('customImages');
+    if (storedImages) {
+      try {
+        return JSON.parse(storedImages);
+      } catch (e) {
+        console.error("Failed to parse custom images from localStorage", e);
+        return {};
+      }
+    }
+  }
+  return {};
+}
+
 
 const App: React.FC = () => {
   const layout = LayoutOption.ModernSleek;
@@ -47,7 +64,15 @@ const App: React.FC = () => {
 
   const [language, setLanguage] = useState<LanguageOption>(getInitialLanguage);
   const [themeMode, setThemeMode] = useState<ThemeMode>(getInitialThemeMode);
+  const [isEditMode, setIsEditMode] = useState(false);
+  const [customImages, setCustomImages] = useState<CustomImages>(getInitialCustomImages);
+  const [editingImageKey, setEditingImageKey] = useState<string | null>(null);
   const headerRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    setIsEditMode(params.get('edit') === 'true');
+  }, []);
 
   useLayoutEffect(() => {
     const headerElement = headerRef.current;
@@ -73,11 +98,9 @@ const App: React.FC = () => {
     root.style.setProperty('--color-text-secondary', scheme.textSecondary);
     root.style.setProperty('--color-success', scheme.success);
 
-    // Apply smooth scrolling to the html element
     root.style.scrollBehavior = 'smooth';
     
     return () => {
-      // Cleanup scroll behavior on component unmount
       root.style.scrollBehavior = 'auto';
     };
   }, [colorScheme, themeMode]);
@@ -85,7 +108,6 @@ const App: React.FC = () => {
   useEffect(() => {
     const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
     const handleChange = (e: MediaQueryListEvent) => {
-        // Only change theme if user hasn't manually overridden it
         if (!localStorage.getItem('themeMode')) {
             setThemeMode(e.matches ? 'dark' : 'light');
         }
@@ -114,6 +136,34 @@ const App: React.FC = () => {
     }
   };
 
+  const handleUpdateImage = (key: string, dataUrl: string) => {
+    const newImages = { ...customImages, [key]: dataUrl };
+    setCustomImages(newImages);
+    localStorage.setItem('customImages', JSON.stringify(newImages));
+  };
+  
+  const handleResetImage = (key: string) => {
+    const newImages = { ...customImages };
+    delete newImages[key];
+    setCustomImages(newImages);
+    localStorage.setItem('customImages', JSON.stringify(newImages));
+  };
+
+  const findDefaultImage = (key: string | null): string | undefined => {
+    if (!key) return undefined;
+    if (key === 'heroBg') {
+        return 'https://picsum.photos/seed/sleek/1920/1080';
+    }
+    if (key.startsWith('product-')) {
+        const productId = parseInt(key.split('-')[1]);
+        return PRODUCTS.find(p => p.id === productId)?.imageUrl;
+    }
+    return undefined;
+  }
+
+  const currentEditingImage = findDefaultImage(editingImageKey);
+  const currentCustomImage = editingImageKey ? customImages[editingImageKey] : undefined;
+
   return (
     <div className={`${getFontClasses()} bg-[var(--color-background)] text-[var(--color-text-primary)] transition-colors duration-500`}>
       <AnimatePresence mode="wait">
@@ -124,16 +174,43 @@ const App: React.FC = () => {
           exit={{ opacity: 0 }}
           transition={{ duration: 0.5 }}
         >
+          {isEditMode && <EditModeBanner />}
           <Header ref={headerRef} layout={layout} language={language} setLanguage={setLanguage} t={t} />
           <main>
-            <Hero layout={layout} t={t} />
-            <ProductSection layout={layout} t={t} />
+            <Hero
+              layout={layout}
+              t={t}
+              isEditMode={isEditMode}
+              customImage={customImages['heroBg']}
+              onEdit={() => setEditingImageKey('heroBg')}
+            />
+            <ProductSection
+              layout={layout}
+              t={t}
+              isEditMode={isEditMode}
+              customImages={customImages}
+              onEdit={(key) => setEditingImageKey(key)}
+            />
             <VisitUsSection t={t} />
           </main>
           <Footer layout={layout} t={t} />
         </motion.div>
       </AnimatePresence>
       <ThemeToggle themeMode={themeMode} setThemeMode={setThemeMode} />
+      <ImageEditModal
+        isOpen={!!editingImageKey}
+        onClose={() => setEditingImageKey(null)}
+        onSave={(dataUrl) => {
+            if (editingImageKey) handleUpdateImage(editingImageKey, dataUrl);
+            setEditingImageKey(null);
+        }}
+        onReset={() => {
+            if (editingImageKey) handleResetImage(editingImageKey);
+            setEditingImageKey(null);
+        }}
+        currentImage={currentCustomImage || currentEditingImage}
+        defaultImage={currentEditingImage}
+      />
     </div>
   );
 };

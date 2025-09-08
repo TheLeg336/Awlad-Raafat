@@ -3,14 +3,18 @@ import { motion, Variants, useScroll, useTransform } from 'framer-motion';
 import { LayoutOption } from '../types';
 import { getTextContent } from '../constants';
 import type { TFunction } from '../App';
+import EditIcon from './icons/EditIcon';
 
 
 interface HeroProps {
   layout: LayoutOption;
   t: TFunction;
+  isEditMode: boolean;
+  customImage: string | undefined;
+  onEdit: () => void;
 }
 
-const Hero: React.FC<HeroProps> = ({ layout, t }) => {
+const Hero: React.FC<HeroProps> = ({ layout, t, isEditMode, customImage, onEdit }) => {
   const content = getTextContent(t);
   const ref = useRef(null);
   const { scrollYProgress } = useScroll({
@@ -19,9 +23,10 @@ const Hero: React.FC<HeroProps> = ({ layout, t }) => {
   });
   const backgroundY = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
 
+  const defaultBgImage = 'https://picsum.photos/seed/sleek/1920/1080';
 
   const currentConfig = {
-      bgImage: 'https://picsum.photos/seed/sleek/1920/1080',
+      bgImage: customImage || defaultBgImage,
       contentClass: 'w-full text-[var(--color-text-primary)]',
       titleClass: 'text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold tracking-tight mb-4',
       subtitleClass: 'text-base sm:text-lg md:text-xl max-w-3xl mx-auto text-[var(--color-text-secondary)]',
@@ -59,6 +64,17 @@ const Hero: React.FC<HeroProps> = ({ layout, t }) => {
         }}
       />
       <div className="absolute inset-0 z-[1] bg-black/20" /> {/* Optional overlay for text readability */}
+      
+      {isEditMode && (
+          <button
+              onClick={onEdit}
+              className="absolute top-5 right-5 z-10 bg-white/90 backdrop-blur-sm text-gray-800 px-4 py-2 rounded-lg text-sm font-semibold hover:bg-white transition-all duration-300 shadow-lg flex items-center gap-2"
+              aria-label="Edit hero background image"
+          >
+              <EditIcon />
+              Edit Background
+          </button>
+      )}
 
       <div className="relative z-[2] h-full container mx-auto px-6 flex flex-col items-center justify-center text-center">
         <motion.div

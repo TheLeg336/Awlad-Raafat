@@ -37,3 +37,5 @@ export interface Product {
   categoryKey: string;
   imageUrl: string;
 }
+
+export type CustomImages = Record<string, string>;
