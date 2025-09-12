@@ -47,7 +47,6 @@ export const PRODUCTS: Product[] = [
 
 export const TEXTS: Record<string, Record<string, string>> = {
   en: {
-    logo: 'Awlad Raafat',
     nav_home: 'Home',
     nav_shop: 'Shop',
     nav_about: 'About',
@@ -71,7 +70,7 @@ export const TEXTS: Record<string, Record<string, string>> = {
     footer_phone_label: 'Phone:',
     footer_phone_number: '01010279777',
     footer_hours: 'Hours: 12 PM - 10 PM (Mon-Sat)',
-    footer_copyright: '© 2024 Awlad Raafat. All Rights Reserved.',
+    footer_copyright: '© 2024 Raafat Furniture. All Rights Reserved.',
     product_sofa_name: 'The Nile Sofa',
     product_sofa_category: 'Living Room',
     product_chair_name: 'Pharaoh Armchair',
@@ -87,7 +86,6 @@ export const TEXTS: Record<string, Record<string, string>> = {
     search_placeholder: 'Search for furniture, styles, and more...',
   },
   ar: {
-    logo: 'أولاد رأفت',
     nav_home: 'الرئيسية',
     nav_shop: 'المجموعات',
     nav_about: 'نبذة عنا',
@@ -111,7 +109,7 @@ export const TEXTS: Record<string, Record<string, string>> = {
     footer_phone_label: 'الهاتف:',
     footer_phone_number: '01010279777',
     footer_hours: 'ساعات العمل: ١٢ ظهراً - ١٠ مساءً (من الإثنين إلى السبت)',
-    footer_copyright: '© 2024 أولاد رأفت. جميع الحقوق محفوظة.',
+    footer_copyright: '© 2024 رأفت للأثاث. جميع الحقوق محفوظة.',
     product_sofa_name: 'أريكة النيل',
     product_sofa_category: 'غرفة المعيشة',
     product_chair_name: 'مقعد فرعون',

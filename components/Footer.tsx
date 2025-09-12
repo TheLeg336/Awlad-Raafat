@@ -11,7 +11,7 @@ interface FooterProps {
 const Footer: React.FC<FooterProps> = ({ layout, t }) => {
     const containerVariants: Variants = {
         hidden: {},
-        visible: { transition: { staggerChildren: 0.2, delayChildren: 0.2 } }
+        visible: { transition: { staggerChildren: 0.1, delayChildren: 0.1 } }
     };
 
     const itemVariants: Variants = {

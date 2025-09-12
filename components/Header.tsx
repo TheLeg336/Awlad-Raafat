@@ -2,6 +2,7 @@ import React, { useState, useEffect, forwardRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { LayoutOption, LanguageOption } from '../types';
 import type { TFunction } from '../types';
+import Logo from './Logo';
 
 interface HeaderProps {
   layout: LayoutOption;
@@ -56,7 +57,6 @@ const Header = forwardRef<HTMLElement, HeaderProps>(({ layout, language, setLang
 
   const headerClass = 'sticky top-0 z-20 bg-[var(--color-background)] bg-opacity-80 backdrop-blur-xl shadow-sm';
   const navClass = 'text-sm font-medium tracking-wide';
-  const logoClass = 'text-xl font-semibold tracking-tighter';
 
   const NavContent: React.FC<{isMobile?: boolean}> = ({ isMobile }) => (
     <>
@@ -95,9 +95,9 @@ const Header = forwardRef<HTMLElement, HeaderProps>(({ layout, language, setLang
     <>
       <header ref={ref} className={`${headerClass} transition-colors duration-500 shine-effect ${isShineAnimating ? 'shine-onload' : ''}`}>
         <div className="container mx-auto px-6 py-4 flex justify-between items-center">
-          <div className={`${logoClass} font-heading text-[var(--color-text-primary)]`}>
+          <div className="text-[var(--color-text-primary)]">
              <a href="#">
-                {t('logo')}
+                <Logo />
              </a>
           </div>
 
@@ -136,9 +136,9 @@ const Header = forwardRef<HTMLElement, HeaderProps>(({ layout, language, setLang
             >
               <div className="p-6 h-full flex flex-col">
                 <div className="flex justify-between items-center mb-10">
-                  <div className={`${logoClass} font-heading text-[var(--color-text-primary)]`}>
+                  <div className="text-[var(--color-text-primary)]">
                     <a href="#" onClick={() => setIsMenuOpen(false)}>
-                        {t('logo')}
+                        <Logo />
                     </a>
                   </div>
                   <button onClick={() => setIsMenuOpen(false)} aria-label="Close menu" className="text-[var(--color-text-primary)]">
